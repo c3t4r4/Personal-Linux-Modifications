@@ -391,5 +391,9 @@ if confirm; then
     install_laravel_pack
 fi
 
+zsh
+
 # BYE
 bye_screen
+
+sudo reboot now
