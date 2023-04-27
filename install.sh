@@ -109,7 +109,7 @@ install_oh_my_z() {
 
     echo -e "\n\e[39m[+] Checking zsh-syntax-highlighting\e[39m\n"
 
-    if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]]; then
+    if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
         git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
         echo -e "\n\e[92m    [✔] zsh-syntax-highlighting installed\e[39m\n"
     else
