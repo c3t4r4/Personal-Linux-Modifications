@@ -89,7 +89,10 @@ install_oh_my_z() {
     if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     else
-        echo -e "\e[92m    [✔] ohmyzsh is already installed\e[39m"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/uninstall.sh)"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+        
+        echo -e "\e[92m    [✔] ohmyzsh installed\e[39m"
     fi
 
     echo -e "\e[39m[+] Checking powerlevel10k\e[39m"
@@ -126,9 +129,9 @@ install_oh_my_z() {
         sed 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/g' $HOME/.zshrc
         sed 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k/powerlevel10k"/g' $HOME/.zshrc
 
-        echo -e "if [ -f ~/.zshrc_aliases ]; then" > $HOME/.zshrc
-        echo -e "  . ~/.zshrc_aliases" > $HOME/.zshrc
-        echo -e "fi" > $HOME/.zshrc
+        echo -e "if [ -f ~/.zshrc_aliases ]; then" >> $HOME/.zshrc
+        echo -e "  . ~/.zshrc_aliases" >> $HOME/.zshrc
+        echo -e "fi" >> $HOME/.zshrc
         
         #echo -e "# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh." > $HOME/.zshrc
         #echo -e "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" > $HOME/.zshrc
