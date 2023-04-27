@@ -233,7 +233,7 @@ install_dbeaver(){
     PKG_OK=$(flatpak list | grep $REQUIRED_PKG)
 
     if [ "" = "$PKG_OK" ]; then
-        sudo flatpak install flathub io.dbeaver.DBeaverCommunity
+        sudo flatpak install flathub io.dbeaver.DBeaverCommunity -y
         echo -e "\n\e[92m    [✔] DBeaver Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] DBeaver is already installed\e[39m\n"
@@ -286,11 +286,11 @@ install_essentials() {
 welcome_screen
 
 # BASICS
-# check_operating_system
-# limit_jornalctl
-# remove_libreoffice
-# update_upgrade
-# autoremove
+check_operating_system
+limit_jornalctl
+remove_libreoffice
+update_upgrade
+autoremove
 
 # ZSH
 # install_oh_my_z
