@@ -64,7 +64,7 @@ check_operating_system() {
 update_upgrade() {
     echo -e "\n\e[39m[+] Update and Upgrade System\e[39m\n"
 
-    sudo timedatectl set-timezone America/Sao_Paulo  > /dev/null 2>&1 && sudo apt update  > /dev/null 2>&1 && sudo apt upgrade -y && sudo apt autoremove -y > /dev/null 2>&1
+    sudo timedatectl set-timezone America/Sao_Paulo  > /dev/null 2>&1 && sudo apt update  > /dev/null 2>&1 && sudo apt upgrade -y  > /dev/null 2>&1 && sudo apt autoremove -y > /dev/null 2>&1
 
     echo -e "\n\e[92m    [✔] Config Jornalctl configured\e[39m\n"
 
@@ -78,7 +78,7 @@ update_upgrade() {
 autoremove() {
     echo -e "\n\e[39m[+] Autoremove System\e[39m\n"
 
-    sudo apt autoremove -y
+    sudo apt autoremove -y  > /dev/null 2>&1
 
     echo -e "\n\e[92m    [✔] Autoremove OK\e[39m\n"
 }
@@ -316,7 +316,7 @@ remove_libreoffice
 update_upgrade
 autoremove
 
-read "Do you want to install ZSH ? [Y/n] "
+read -r "Do you want to install ZSH ? [Y/n] "
 response=${response:l} #tolower
 if [[ $response =~ ^(y| ) ]] || [[ -z $response ]]; then
     # ZSH
@@ -324,7 +324,7 @@ if [[ $response =~ ^(y| ) ]] || [[ -z $response ]]; then
     set_p10k_config
 fi
 
-read "Do you want to install Programs ? [Y/n] "
+read -r "Do you want to install Programs ? [Y/n] "
 response=${response:l} #tolower
 if [[ $response =~ ^(y| ) ]] || [[ -z $response ]]; then
     # PROGRAMS
