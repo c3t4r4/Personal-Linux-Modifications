@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CURRENT_USER="${SUDO_USER}"
+CURRENT_USER="${whoami}"
 SCRIPT_PATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
 
@@ -18,6 +18,8 @@ ________/\\\\\\\\\_____/\\\\\\\\\\___________________________/\\\_______________
         _______\/////////____\/////////_________\/////______________\///_____\///____________________\///_____
 
 EOF
+
+echo -e "Olá $CURRENT_USER"
 }
 
 check_operating_system() {
@@ -42,7 +44,7 @@ check_operating_system() {
 
 create_directory() {
     # Create the TinyCheck directory and move the whole stuff there.
-    echo -e "[+] Creating TinyCheck folder under /usr/share/"
+    echo -e "[+] Creating c3t4r4 folder under /usr/share/"
     mkdir /usr/share/c3t4r4
     cp -Rf ./* /usr/share/c3t4r4
 }
@@ -84,7 +86,7 @@ install_oh_my_z() {
 
     echo -e "\e[39m[+] Checking ohmyzsh\e[39m"
 
-    if ! command_exists zsh; then
+    if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     else
         echo -e "\e[92m    [✔] ohmyzsh is already installed\e[39m"
@@ -92,7 +94,7 @@ install_oh_my_z() {
 
     echo -e "\e[39m[+] Checking powerlevel10k\e[39m"
     
-    if [[ ! -d "$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]]; then
+    if [[ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]]; then
         git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
         echo -e "\e[92m    [✔] powerlevel10k installed\e[39m"
     else
