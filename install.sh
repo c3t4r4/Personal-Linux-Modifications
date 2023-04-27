@@ -78,6 +78,8 @@ install_oh_my_z() {
     sudo apt install zsh fonts-powerline dconf-cli -y && zsh --version
     chsh -s /usr/bin/zsh
 
+    read -p "Press any key to resume ..."
+
     echo -e "\n\e[39m[+] Checking ohmyzsh\e[39m\n"
 
     if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
