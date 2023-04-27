@@ -64,13 +64,13 @@ check_operating_system() {
 update_upgrade() {
     echo -e "\n\e[39m[+] Update and Upgrade System\e[39m\n"
 
-    sudo timedatectl set-timezone America/Sao_Paulo && sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+    sudo timedatectl set-timezone America/Sao_Paulo && sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y > /dev/null 2>&1
 
     echo -e "\n\e[92m    [✔] Config Jornalctl configured\e[39m\n"
 
     echo -e "\n\e[39m[+] Install packages\e[39m\n"
 
-    sudo apt install git curl wget net-tools software-properties-common apt-transport-https acl unzip htop ncdu -y
+    sudo apt install git curl wget net-tools software-properties-common apt-transport-https acl unzip htop ncdu -y > /dev/null 2>&1
 
     echo -e "\n\e[92m    [✔] Packages Installed\e[39m\n"
 }
@@ -86,7 +86,7 @@ autoremove() {
 limit_jornalctl() {
     echo -e "\n\e[39m[+] Config Jornalctl Files\e[39m\n"
 
-    sudo journalctl --vacuum-time=2d && sudo journalctl --vacuum-size=500M
+    sudo journalctl --vacuum-time=2d && sudo journalctl --vacuum-size=500M > /dev/null 2>&1
 
     echo -e "\n\e[92m    [✔] Config Jornalctl configured\e[39m\n"
 }
@@ -97,7 +97,7 @@ install_oh_my_z() {
     echo -e "\n\e[39m[+] Checking ohmyzsh\e[39m\n"
 
     if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" > /dev/null 2>&1
     else
         echo -e "\n\e[92m    [✔] ohmyzsh is already installed\e[39m\n"
     fi
@@ -109,7 +109,7 @@ install_oh_my_z() {
     echo -e "\e[39m[+] Checking powerlevel10k\e[39m"
     
     if [[ ! -d "$ZSH_CUSTOM/themes/powerlevel10k" ]]; then
-        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM/themes/powerlevel10k"
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM/themes/powerlevel10k" > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] powerlevel10k installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] powerlevel10k is already installed\e[39m\n"
@@ -118,7 +118,7 @@ install_oh_my_z() {
     echo -e "\n\e[39m[+] Checking zsh-autosuggestions\e[39m\n"
 
     if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]]; then
-        git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+        git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM/plugins/zsh-autosuggestions" > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] zsh-autosuggestions installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] zsh-autosuggestions is already installed\e[39m\n"
@@ -127,7 +127,7 @@ install_oh_my_z() {
     echo -e "\n\e[39m[+] Checking zsh-syntax-highlighting\e[39m\n"
 
     if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] zsh-syntax-highlighting installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] zsh-syntax-highlighting is already installed\e[39m\n"
@@ -186,9 +186,9 @@ install_chrome(){
     if [ "" = "$PKG_OK" ]; then
         if [ ! -f "/tmp/google-chrome.deb" ]
         then
-            wget -O /tmp/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            wget -O /tmp/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb > /dev/null 2>&1
         fi
-        sudo dpkg -i /tmp/google-chrome.deb
+        sudo dpkg -i /tmp/google-chrome.deb > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] Google Chrome Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Google Chrome is already installed\e[39m\n"
@@ -204,12 +204,12 @@ install_edge(){
     if [ "" = "$PKG_OK" ]; then
         
         if ! grep -q https://packages.microsoft.com/repos/edge "/etc/apt/sources.list.d/microsoft-edge-dev.list" && ! grep -q https://packages.microsoft.com/repos/edge "/etc/apt/sources.list.d/microsoft-edge.list"; then
-            curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-            sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
-            sudo sh -c 'echo "deb [arch=amd64]  https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-dev.list'
-            sudo rm microsoft.gpg && sudo apt update
+            curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg > /dev/null 2>&1
+            sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/ > /dev/null 2>&1
+            sudo sh -c 'echo "deb [arch=amd64]  https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-dev.list' > /dev/null 2>&1
+            sudo rm microsoft.gpg && sudo apt update > /dev/null 2>&1
         fi
-        sudo apt install $REQUIRED_PKG -y
+        sudo apt install $REQUIRED_PKG -y > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] Microsoft Edge Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Microsoft Edge is already installed\e[39m\n"
@@ -224,11 +224,11 @@ install_vscode(){
 
     if [ "" = "$PKG_OK" ]; then
         if ! grep -q https://packages.microsoft.com/repos/vscode "/etc/apt/sources.list.d/microsoft-edge-dev.list" && ! grep -q https://packages.microsoft.com/repos/vscode "/etc/apt/sources.list.d/microsoft-edge.list"; then
-            wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add –
-            sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" >> /etc/apt/sources.list.d/microsoft-edge-dev.list'
-            sudo apt update
+            wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add – > /dev/null 2>&1
+            sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" >> /etc/apt/sources.list.d/microsoft-edge-dev.list' > /dev/null 2>&1
+            sudo apt update > /dev/null 2>&1
         fi
-        sudo apt install $REQUIRED_PKG -y
+        sudo apt install $REQUIRED_PKG -y > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] Microsoft VSCode Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Microsoft VSCode is already installed\e[39m\n"
@@ -242,9 +242,9 @@ install_sublime(){
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
 
     if [ "" = "$PKG_OK" ]; then
-        wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
-        sudo sh -c 'echo "deb [arch=amd64] https://download.sublimetext.com/ apt/stable/" >> /etc/apt/sources.list.d/sublime-text.list'
-        sudo apt update && sudo apt install $REQUIRED_PKG -y
+        wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null 2>&1
+        sudo sh -c 'echo "deb [arch=amd64] https://download.sublimetext.com/ apt/stable/" >> /etc/apt/sources.list.d/sublime-text.list' > /dev/null 2>&1
+        sudo apt update && sudo apt install $REQUIRED_PKG -y > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] Sublime Text Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Sublime Text is already installed\e[39m\n"
@@ -258,7 +258,7 @@ install_dbeaver(){
     PKG_OK=$(flatpak list | grep $REQUIRED_PKG)
 
     if [ "" = "$PKG_OK" ]; then
-        sudo flatpak install flathub io.dbeaver.DBeaverCommunity -y
+        sudo flatpak install flathub io.dbeaver.DBeaverCommunity -y > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] DBeaver Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] DBeaver is already installed\e[39m\n"
@@ -272,7 +272,7 @@ install_thunderbird(){
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
 
     if [ "" = "$PKG_OK" ]; then
-        sudo apt install $REQUIRED_PKG -y
+        sudo apt install $REQUIRED_PKG -y > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] Thunderbird Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Thunderbird is already installed\e[39m\n"
@@ -286,9 +286,9 @@ install_element(){
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
 
     if [ "" = "$PKG_OK" ]; then
-        sudo wget -O /usr/share/keyrings/element-io-archive-keyring.gpg https://packages.element.io/debian/element-io-archive-keyring.gpg
-        echo "deb [signed-by=/usr/share/keyrings/element-io-archive-keyring.gpg] https://packages.element.io/debian/ default main" | sudo tee /etc/apt/sources.list.d/element-io.list
-        sudo apt update && sudo apt install $REQUIRED_PKG -y
+        sudo wget -O /usr/share/keyrings/element-io-archive-keyring.gpg https://packages.element.io/debian/element-io-archive-keyring.gpg > /dev/null 2>&1
+        echo "deb [signed-by=/usr/share/keyrings/element-io-archive-keyring.gpg] https://packages.element.io/debian/ default main" | sudo tee /etc/apt/sources.list.d/element-io.list > /dev/null 2>&1
+        sudo apt update && sudo apt install $REQUIRED_PKG -y > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] ElementChat Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] ElementChat is already installed\e[39m\n"
