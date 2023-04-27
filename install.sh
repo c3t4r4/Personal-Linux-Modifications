@@ -97,7 +97,7 @@ install_oh_my_z() {
 
     echo -e "\n\e[39m[+] Checking zsh-autosuggestions\e[39m\n"
 
-    if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]]; then
+    if [[ ! -d "$HOME/.oh-my-zsh/plugins/zsh-autosuggestions" ]]; then
         git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
         echo -e "\n\e[92m    [✔] zsh-autosuggestions installed\e[39m\n"
     else
@@ -106,12 +106,14 @@ install_oh_my_z() {
 
     echo -e "\n\e[39m[+] Checking zsh-syntax-highlighting\e[39m\n"
 
-    if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]]; then
+    if [[ ! -d "$HOME/.oh-my-zsh/plugins/zsh-autosuggestions" ]]; then
         git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
         echo -e "\n\e[92m    [✔] zsh-syntax-highlighting installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] zsh-syntax-highlighting is already installed\e[39m\n"
     fi
+
+    p10k configure
     
 
     echo -e "\n\e[39m[+] Checking config on .zshrc file\e[39m\n"
@@ -123,9 +125,11 @@ install_oh_my_z() {
         echo -e "if [ -f ~/.zshrc_aliases ]; then" >> $HOME/.zshrc
         echo -e "  . ~/.zshrc_aliases" >> $HOME/.zshrc
         echo -e "fi" >> $HOME/.zshrc
-        
-        echo -e "# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh." > $HOME/.zshrc
-        echo -e "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" > $HOME/.zshrc
+
+        echo -e "\n\n" >> $HOME/.zshrc
+
+        # echo -e "# To customize prompt, run 'p10k configure' or edit ~/.p10k.zsh." >> $HOME/.zshrc
+        # echo -e "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> $HOME/.zshrc
 
         echo -e "\n\e[92m    [✔] .zshrc configured\e[39m\n"
     else
@@ -136,7 +140,7 @@ install_oh_my_z() {
 set_p10k_config(){
     echo -e "\n\e[39m[+] Checking config on .p10k.zsh and .zshrc_aliases file\e[39m\n"
 
-    cp .p10k.zsh $HOME/
+    # cp .p10k.zsh $HOME/
     cp .zshrc_aliases $HOME/
     source $HOME/.zshrc
 
