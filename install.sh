@@ -271,8 +271,6 @@ install_essentials() {
 #RUN SCRIPT
 welcome_screen
 
-install_essentials
-
 # ZSH
 # check_operating_system
 # limit_jornalctl
@@ -280,3 +278,7 @@ install_essentials
 # update_upgrade
 # install_oh_my_z
 # set_p10k_config
+
+# PROGRAMS
+install_essentials
+
