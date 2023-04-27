@@ -8,4 +8,3 @@ alias upd-portainer='docker stop portainer && docker rm portainer && docker pull
 
 alias phpas='php artisan serve --host=0.0.0.0 --port=8000'
 alias npmrw='npm run watch'
-alias ia="shell-genie ask"
