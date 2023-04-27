@@ -153,19 +153,27 @@ remove_libreoffice() {
     sudo apt-get remove libreoffice-core -y
 }
 
-if [[ $EUID -ne 0 ]]; then
-    echo "This must be run as root. Type in 'sudo bash $0' to run."
-	exit 1
-elif [[ -f /usr/share/c3t4r4/modifyLinux.yaml ]]; then
-    echo "You have a c3t4r4 instance already installed on this box."
-	exit 1
-else
-    welcome_screen
-    check_operating_system
-    limit_jornalctl
-    update_upgrade
-    #create_directory
-    install_oh_my_z
-    set_p10k_config
+# if [[ $EUID -ne 0 ]]; then
+#     echo "This must be run as root. Type in 'sudo bash $0' to run."
+# 	exit 1
+# elif [[ -f /usr/share/c3t4r4/modifyLinux.yaml ]]; then
+#     echo "You have a c3t4r4 instance already installed on this box."
+# 	exit 1
+# else
+#     welcome_screen
+#     check_operating_system
+#     limit_jornalctl
+#     update_upgrade
+#     #create_directory
+#     install_oh_my_z
+#     set_p10k_config
     
-fi
+# fi
+
+welcome_screen
+check_operating_system
+limit_jornalctl
+update_upgrade
+#create_directory
+install_oh_my_z
+set_p10k_config
