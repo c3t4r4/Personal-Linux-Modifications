@@ -87,7 +87,7 @@ install_oh_my_z() {
 
     chsh -s /usr/bin/zsh
 
-    ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
+    ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 
     echo -e "Custom: $ZSH_CUSTOM"
 
@@ -96,7 +96,7 @@ install_oh_my_z() {
     echo -e "\e[39m[+] Checking powerlevel10k\e[39m"
     
     if [[ ! -d "$ZSH_CUSTOM/themes/powerlevel10k" ]]; then
-        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM/themes/powerlevel10k"
         echo -e "\n\e[92m    [✔] powerlevel10k installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] powerlevel10k is already installed\e[39m\n"
@@ -105,7 +105,7 @@ install_oh_my_z() {
     echo -e "\n\e[39m[+] Checking zsh-autosuggestions\e[39m\n"
 
     if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]]; then
-        git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+        git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
         echo -e "\n\e[92m    [✔] zsh-autosuggestions installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] zsh-autosuggestions is already installed\e[39m\n"
@@ -114,7 +114,7 @@ install_oh_my_z() {
     echo -e "\n\e[39m[+] Checking zsh-syntax-highlighting\e[39m\n"
 
     if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]]; then
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
         echo -e "\n\e[92m    [✔] zsh-syntax-highlighting installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] zsh-syntax-highlighting is already installed\e[39m\n"
