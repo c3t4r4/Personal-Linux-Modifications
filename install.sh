@@ -89,10 +89,7 @@ install_oh_my_z() {
     if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     else
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/uninstall.sh)"
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-        
-        echo -e "\e[92m    [✔] ohmyzsh installed\e[39m"
+        echo -e "\e[92m    [✔] ohmyzsh is already installed\e[39m"
     fi
 
     echo -e "\e[39m[+] Checking powerlevel10k\e[39m"
