@@ -223,9 +223,10 @@ install_vscode(){
 
     if [ "" = "$PKG_OK" ]; then
         if ! grep -q https://packages.microsoft.com/repos/vscode "/etc/apt/sources.list.d/microsoft-edge-dev.list" && ! grep -q https://packages.microsoft.com/repos/vscode "/etc/apt/sources.list.d/microsoft-edge.list"; then
-            wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add – 
+            curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+            sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
             sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" >> /etc/apt/sources.list.d/microsoft-edge-dev.list'
-            sudo apt update > /dev/null 2>&1
+            sudo rm microsoft.gpg && sudo apt update > /dev/null 2>&1
         fi
         sudo apt install $REQUIRED_PKG -y > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] Microsoft VSCode Installed\e[39m\n"
