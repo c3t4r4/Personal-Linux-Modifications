@@ -120,17 +120,21 @@ install_oh_my_z() {
     echo -e "\n\e[39m[+] Checking config on .zshrc file\e[39m\n"
 
      if [[ -f "$HOME/.zshrc" ]]; then
-        sed -i 's/robbyrussell/powerlevel10k/powerlevel10k/g' "$HOME/.zshrc"
-        sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/g' "$HOME/.zshrc"
+        sed -i 's/"robbyrussell"/"powerlevel10k/powerlevel10k"/g' "$HOME/.zshrc"
+        sed -i 's/"plugins=(git)"/"plugins=(git zsh-autosuggestions zsh-syntax-highlighting)"/g' "$HOME/.zshrc"
 
-        echo -e "if [ -f ~/.zshrc_aliases ]; then" >> "$HOME/.zshrc"
-        echo -e "  . ~/.zshrc_aliases" >> "$HOME/.zshrc"
-        echo -e "fi" >> "$HOME/.zshrc"
+        if ! grep -q ~/.zshrc_aliases "$HOME/.zshrc"; then
+            echo -e "if [ -f ~/.zshrc_aliases ]; then" >> $HOME/.zshrc
+            echo -e "  . ~/.zshrc_aliases" >> $HOME/.zshrc
+            echo -e "fi" >> $HOME/.zshrc
+            echo -e "\n" >> $HOME/.zshrc
+        fi
 
-        echo -e "\n\n" >> "$HOME/.zshrc"
-
-        # echo -e "# To customize prompt, run 'p10k configure' or edit ~/.p10k.zsh." >> $HOME/.zshrc
-        # echo -e "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> $HOME/.zshrc
+        if ! grep -q source ~/.p10k.zsh "$HOME/.zshrc"; then
+            echo -e "\n" >> $HOME/.zshrc
+            echo -e "# To customize prompt, run 'p10k configure' or edit ~/.p10k.zsh." >> $HOME/.zshrc
+            echo -e "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> $HOME/.zshrc
+        fi
 
         echo -e "\n\e[92m    [✔] .zshrc configured\e[39m\n"
     else
