@@ -45,7 +45,7 @@ update_upgrade() {
 
     echo -e "\n\e[39m[+] Install packages\e[39m\n"
 
-    sudo apt install git curl wget net-tools software-properties-common acl unzip htop ncdu -y
+    sudo apt install git curl wget net-tools software-properties-common apt-transport-https acl unzip htop ncdu -y
 
     echo -e "\n\e[92m    [✔] Packages Installed\e[39m\n"
 }
@@ -162,8 +162,110 @@ install_chrome(){
     fi
 }
 
+install_edge(){
+    echo -e "\n\e[39m[+] Checking Microsoft Edge\e[39m\n"
+
+    REQUIRED_PKG="microsoft-edge-stable"
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
+
+    if [ "" = "$PKG_OK" ]; then
+        curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+        sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+        sudo sh -c 'echo "deb [arch=amd64]  https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-dev.list'
+        sudo rm microsoft.gpg
+        sudo apt update && sudo apt install $REQUIRED_PKG -y
+        echo -e "\n\e[92m    [✔] Microsoft Edge Installed\e[39m\n"
+    else
+        echo -e "\n\e[92m    [✔] Microsoft Edge is already installed\e[39m\n"
+    fi
+}
+
+install_vscode(){
+    echo -e "\n\e[39m[+] Checking Microsoft VSCode\e[39m\n"
+
+    REQUIRED_PKG="code"
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
+
+    if [ "" = "$PKG_OK" ]; then
+        wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add –
+        sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" >> /etc/apt/sources.list.d/microsoft-edge-dev.list'
+        sudo apt update && sudo apt install $REQUIRED_PKG -y
+        echo -e "\n\e[92m    [✔] Microsoft VSCode Installed\e[39m\n"
+    else
+        echo -e "\n\e[92m    [✔] Microsoft VSCode is already installed\e[39m\n"
+    fi
+}
+
+install_sublime(){
+    echo -e "\n\e[39m[+] Checking Sublime Text\e[39m\n"
+
+    REQUIRED_PKG="sublime-text"
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
+
+    if [ "" = "$PKG_OK" ]; then
+        wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
+        sudo sh -c 'echo "deb [arch=amd64] https://download.sublimetext.com/ apt/stable/" >> /etc/apt/sources.list.d/sublime-text.list'
+        sudo apt update && sudo apt install $REQUIRED_PKG -y
+        echo -e "\n\e[92m    [✔] Sublime Text Installed\e[39m\n"
+    else
+        echo -e "\n\e[92m    [✔] Sublime Text is already installed\e[39m\n"
+    fi
+}
+
+install_dbeaver(){
+    echo -e "\n\e[39m[+] Checking DBeaver\e[39m\n"
+
+    REQUIRED_PKG="dbeaver"
+    PKG_OK=$(flatpak list | grep $REQUIRED_PKG)
+
+    if [ "" = "$PKG_OK" ]; then
+        sudo flatpak install flathub io.dbeaver.DBeaverCommunity
+        echo -e "\n\e[92m    [✔] DBeaver Installed\e[39m\n"
+    else
+        echo -e "\n\e[92m    [✔] DBeaver is already installed\e[39m\n"
+    fi
+}
+
+install_thunderbird(){
+    echo -e "\n\e[39m[+] Checking Thunderbird\e[39m\n"
+
+    REQUIRED_PKG="thunderbird"
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
+
+    if [ "" = "$PKG_OK" ]; then
+        sudo apt install $REQUIRED_PKG -y
+        echo -e "\n\e[92m    [✔] Thunderbird Installed\e[39m\n"
+    else
+        echo -e "\n\e[92m    [✔] Thunderbird is already installed\e[39m\n"
+    fi
+}
+
+install_element(){
+    echo -e "\n\e[39m[+] Checking ElementChat\e[39m\n"
+
+    REQUIRED_PKG="element-desktop"
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
+
+    if [ "" = "$PKG_OK" ]; then
+        sudo wget -O /usr/share/keyrings/element-io-archive-keyring.gpg https://packages.element.io/debian/element-io-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/element-io-archive-keyring.gpg] https://packages.element.io/debian/ default main" | sudo tee /etc/apt/sources.list.d/element-io.list
+        sudo apt update && sudo apt install $REQUIRED_PKG -y
+        echo -e "\n\e[92m    [✔] ElementChat Installed\e[39m\n"
+    else
+        echo -e "\n\e[92m    [✔] ElementChat is already installed\e[39m\n"
+    fi
+}
+
+
+
 install_essentials() {
     install_chrome
+    install_edge
+    install_vscode
+    install_sublime
+    install_dbeaver
+    install_thunderbird
+    install_element
 }
 
 #RUN SCRIPT
