@@ -17,39 +17,23 @@ EOF
 }
 
 check_operating_system() {
-   # Check that this installer is running on a
-   # Debian-like operating system (for dependencies)
+    # Check that this installer is running on a
+    # Debian-like operating system (for dependencies)
 
-   echo -e "\n\e[39m[+] Checking operating system\e[39m\n"
-   error="\n\e[91m    [✘] Need to be run on a Ubuntu-like operating system, exiting.\e[39m\n"
+    echo -e "\n\e[39m[+] Checking operating system\e[39m\n"
+    error="\n\e[91m    [✘] Need to be run on a Ubuntu-like operating system, exiting.\e[39m\n"
 
-   if [[ -f "/etc/os-release" ]]; then
-       if [[ $(cat /etc/os-release | grep -e "ID_LIKE=\"\?ubuntu" -e "ID=ubuntu") ]]; then
-           echo -e "\n\e[92m    [✔] Ubuntu-like operating system\e[39m\n"
-       else
-           echo -e "$error"
-           exit 1
-       fi
-   else
-       echo -e "$error"
-       exit 1
-   fi
-}
-
-create_directory() {
-    # Create the TinyCheck directory and move the whole stuff there.
-    echo -e "[+] Creating c3t4r4 folder under /usr/share/"
-    mkdir /usr/share/c3t4r4
-    cp -Rf ./* /usr/share/c3t4r4
-}
-
-cleaning() {
-    # Removing some files and useless directories
-    rm /usr/share/c3t4r4/install.sh
-    rm /usr/share/c3t4r4/README.md
-    rm /usr/share/c3t4r4/LICENSE.txt
-    rm /usr/share/c3t4r4/NOTICE.txt
-    rm -rf /usr/share/c3t4r4/assets/
+    if [[ -f "/etc/os-release" ]]; then
+        if [[ $(cat /etc/os-release | grep -e "ID_LIKE=\"\?ubuntu" -e "ID=ubuntu") ]]; then
+            echo -e "\n\e[92m    [✔] Ubuntu-like operating system\e[39m\n"
+        else
+            echo -e "$error"
+            exit 1
+        fi
+    else
+        echo -e "$error"
+        exit 1
+    fi
 }
 
 update_upgrade() {
@@ -119,7 +103,7 @@ install_oh_my_z() {
 
     echo -e "\n\e[39m[+] Checking config on .zshrc file\e[39m\n"
 
-     if [[ -f "$HOME/.zshrc" ]]; then
+    if [[ -f "$HOME/.zshrc" ]]; then
         sed -i 's:robbyrussell:powerlevel10k/powerlevel10k:g' "$HOME/.zshrc"
         sed -i 's:plugins=(git):plugins=(git zsh-autosuggestions zsh-syntax-highlighting):g' "$HOME/.zshrc"
 
@@ -154,30 +138,19 @@ set_p10k_config(){
 
 
 remove_libreoffice() {
+    echo -e "\n\e[39m[+] Checking LibreOffice\e[39m\n"
+
     sudo apt-get remove libreoffice-core -y
+
+    echo -e "\n\e[92m    [✔] LibreOffice Removed\e[39m\n"
 }
 
-# if [[ $EUID -ne 0 ]]; then
-#     echo "This must be run as root. Type in 'sudo bash $0' to run."
-# 	exit 1
-# elif [[ -f /usr/share/c3t4r4/modifyLinux.yaml ]]; then
-#     echo "You have a c3t4r4 instance already installed on this box."
-# 	exit 1
-# else
-#     welcome_screen
-#     check_operating_system
-#     limit_jornalctl
-#     update_upgrade
-#     #create_directory
-#     install_oh_my_z
-#     set_p10k_config
-    
-# fi
+#RUN SCRIPT
 
 welcome_screen
 check_operating_system
 limit_jornalctl
+remove_libreoffice
 update_upgrade
-#create_directory
 install_oh_my_z
 set_p10k_config
