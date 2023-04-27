@@ -87,9 +87,11 @@ install_oh_my_z() {
 
     chsh -s /usr/bin/zsh
 
-    read -p "Press any key to resume ..."
-
     ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
+
+    echo -e "Custom: $ZSH_CUSTOM"
+
+    read -p "Press any key to resume ..."
 
     echo -e "\e[39m[+] Checking powerlevel10k\e[39m"
     
