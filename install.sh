@@ -136,7 +136,6 @@ set_p10k_config(){
     echo -e "\n\e[92m    [✔] .p10k.zsh and .zshrc_aliases configured\e[39m\n"
 }
 
-
 remove_libreoffice() {
     echo -e "\n\e[39m[+] Checking LibreOffice\e[39m\n"
 
@@ -145,12 +144,35 @@ remove_libreoffice() {
     echo -e "\n\e[92m    [✔] LibreOffice Removed\e[39m\n"
 }
 
-#RUN SCRIPT
+install_chrome(){
+    echo -e "\n\e[39m[+] Checking Google Chrome\e[39m\n"
 
+    if dpkg -s google-chrome-stable >/dev/null 2>&1;
+    then
+        if [ ! -f "/tmp/google-chrome.deb" ]
+        then
+            wget -O /tmp/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        fi
+        dpkg -i /tmp/google-chrome.deb
+        echo -e "\n\e[92m    [✔] Google Chrome Installed\e[39m\n"
+    else
+        echo -e "\n\e[92m    [✔] Google Chrome is already installed\e[39m\n"
+    fi
+}
+
+install_essentials() {
+    install_chrome
+}
+
+#RUN SCRIPT
 welcome_screen
-check_operating_system
-limit_jornalctl
-remove_libreoffice
-update_upgrade
-install_oh_my_z
-set_p10k_config
+
+install_essentials
+
+# ZSH
+# check_operating_system
+# limit_jornalctl
+# remove_libreoffice
+# update_upgrade
+# install_oh_my_z
+# set_p10k_config
