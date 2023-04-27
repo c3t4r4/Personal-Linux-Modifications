@@ -308,7 +308,7 @@ install_essentials() {
 
 confirm() {
     while true; do
-        read -p "Do you want to install $TEXT ?? (YES/NO/CANCEL) " yn
+        read -p "\nDo you want to install $TEXT ?? (YES/NO/CANCEL) \n" yn
         case $yn in
             [Yy]* ) return 0;;
             [Nn]* ) return 1;;
