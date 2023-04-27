@@ -76,9 +76,6 @@ limit_jornalctl() {
 
 install_oh_my_z() {
     sudo apt install zsh fonts-powerline dconf-cli -y && zsh --version
-    chsh -s /usr/bin/zsh
-
-    read -p "Press any key to resume ..."
 
     echo -e "\n\e[39m[+] Checking ohmyzsh\e[39m\n"
 
@@ -87,6 +84,10 @@ install_oh_my_z() {
     else
         echo -e "\n\e[92m    [✔] ohmyzsh is already installed\e[39m\n"
     fi
+
+    chsh -s /usr/bin/zsh
+
+    read -p "Press any key to resume ..."
 
     echo -e "\e[39m[+] Checking powerlevel10k\e[39m"
     
