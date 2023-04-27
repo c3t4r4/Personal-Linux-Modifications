@@ -50,6 +50,14 @@ update_upgrade() {
     echo -e "\n\e[92m    [✔] Packages Installed\e[39m\n"
 }
 
+autoremove() {
+    echo -e "\n\e[39m[+] Autoremove System\e[39m\n"
+
+    sudo apt autoremove -y
+
+    echo -e "\n\e[92m    [✔] Autoremove OK\e[39m\n"
+}
+
 limit_jornalctl() {
     echo -e "\n\e[39m[+] Config Jornalctl Files\e[39m\n"
 
@@ -169,11 +177,14 @@ install_edge(){
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
 
     if [ "" = "$PKG_OK" ]; then
-        curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-        sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
-        sudo sh -c 'echo "deb [arch=amd64]  https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-dev.list'
-        sudo rm microsoft.gpg
-        sudo apt update && sudo apt install $REQUIRED_PKG -y
+        
+        if ! grep -q https://packages.microsoft.com/repos/edge "/etc/apt/sources.list.d/microsoft-edge-dev.list" && ! grep -q https://packages.microsoft.com/repos/edge "/etc/apt/sources.list.d/microsoft-edge.list"; then
+            curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+            sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+            sudo sh -c 'echo "deb [arch=amd64]  https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-dev.list'
+            sudo rm microsoft.gpg && sudo apt update
+        fi
+        sudo apt install $REQUIRED_PKG -y
         echo -e "\n\e[92m    [✔] Microsoft Edge Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Microsoft Edge is already installed\e[39m\n"
@@ -187,9 +198,12 @@ install_vscode(){
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
 
     if [ "" = "$PKG_OK" ]; then
-        wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add –
-        sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" >> /etc/apt/sources.list.d/microsoft-edge-dev.list'
-        sudo apt update && sudo apt install $REQUIRED_PKG -y
+        if ! grep -q https://packages.microsoft.com/repos/vscode "/etc/apt/sources.list.d/microsoft-edge-dev.list" && ! grep -q https://packages.microsoft.com/repos/vscode "/etc/apt/sources.list.d/microsoft-edge.list"; then
+            wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add –
+            sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" >> /etc/apt/sources.list.d/microsoft-edge-dev.list'
+            sudo apt update
+        fi
+        sudo apt install $REQUIRED_PKG -y
         echo -e "\n\e[92m    [✔] Microsoft VSCode Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Microsoft VSCode is already installed\e[39m\n"
@@ -271,11 +285,14 @@ install_essentials() {
 #RUN SCRIPT
 welcome_screen
 
-# ZSH
+# BASICS
 # check_operating_system
 # limit_jornalctl
 # remove_libreoffice
 # update_upgrade
+# autoremove
+
+# ZSH
 # install_oh_my_z
 # set_p10k_config
 
