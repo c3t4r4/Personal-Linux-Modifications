@@ -349,7 +349,7 @@ install_essentials() {
 confirm() {
     while true; do
         echo -e "\n"
-        read -p "Do you want to install $TEXT ?? (YES/NO/CANCEL) " yn
+        read -p "Do you want to $TEXT ?? (YES/NO/CANCEL) " yn
         echo -e "\n"
         case $yn in
             [Yy]* ) return 0;;
@@ -377,23 +377,25 @@ if confirm; then
     # ZSH
     install_oh_my_z
     set_p10k_config
+    zsh
 fi
 
-TEXT="Programs"
+TEXT="install Programs"
 if confirm; then
     # PROGRAMS
     install_essentials
 fi
 
-TEXT="Laravel Dev Pack"
+TEXT="install Laravel Dev Pack"
 if confirm; then
     # Laravel Dev Pack
     install_laravel_pack
 fi
 
-zsh
-
 # BYE
 bye_screen
 
-sudo reboot now
+TEXT="reboot system"
+if confirm; then
+    sudo reboot now
+fi
