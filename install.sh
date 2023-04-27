@@ -64,7 +64,7 @@ check_operating_system() {
 update_upgrade() {
     echo -e "\n\e[39m[+] Update and Upgrade System\e[39m\n"
 
-    sudo timedatectl set-timezone America/Sao_Paulo && sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y > /dev/null 2>&1
+    sudo timedatectl set-timezone America/Sao_Paulo  > /dev/null 2>&1 && sudo apt update  > /dev/null 2>&1 && sudo apt upgrade -y && sudo apt autoremove -y > /dev/null 2>&1
 
     echo -e "\n\e[92m    [✔] Config Jornalctl configured\e[39m\n"
 
@@ -86,13 +86,13 @@ autoremove() {
 limit_jornalctl() {
     echo -e "\n\e[39m[+] Config Jornalctl Files\e[39m\n"
 
-    sudo journalctl --vacuum-time=2d && sudo journalctl --vacuum-size=500M > /dev/null 2>&1
+    sudo journalctl --vacuum-time=2d  > /dev/null 2>&1 && sudo journalctl --vacuum-size=500M > /dev/null 2>&1
 
     echo -e "\n\e[92m    [✔] Config Jornalctl configured\e[39m\n"
 }
 
 install_oh_my_z() {
-    sudo apt install zsh fonts-powerline dconf-cli -y && zsh --version
+    sudo apt install zsh fonts-powerline dconf-cli -y  > /dev/null 2>&1 && zsh --version
 
     echo -e "\n\e[39m[+] Checking ohmyzsh\e[39m\n"
 
@@ -162,7 +162,6 @@ install_oh_my_z() {
 set_p10k_config(){
     echo -e "\n\e[39m[+] Checking config on .p10k.zsh and .zshrc_aliases file\e[39m\n"
 
-    # cp .p10k.zsh $HOME/
     cp .zshrc_aliases $HOME/
     source $HOME/.zshrc
 
@@ -172,7 +171,7 @@ set_p10k_config(){
 remove_libreoffice() {
     echo -e "\n\e[39m[+] Checking LibreOffice\e[39m\n"
 
-    sudo apt-get remove libreoffice-core -y
+    sudo apt-get remove libreoffice-core -y  > /dev/null 2>&1
 
     echo -e "\n\e[92m    [✔] LibreOffice Removed\e[39m\n"
 }
@@ -206,7 +205,7 @@ install_edge(){
         if ! grep -q https://packages.microsoft.com/repos/edge "/etc/apt/sources.list.d/microsoft-edge-dev.list" && ! grep -q https://packages.microsoft.com/repos/edge "/etc/apt/sources.list.d/microsoft-edge.list"; then
             curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg > /dev/null 2>&1
             sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/ > /dev/null 2>&1
-            sudo sh -c 'echo "deb [arch=amd64]  https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-dev.list' > /dev/null 2>&1
+            sudo sh -c 'echo "deb [arch=amd64]  https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-dev.list'
             sudo rm microsoft.gpg && sudo apt update > /dev/null 2>&1
         fi
         sudo apt install $REQUIRED_PKG -y > /dev/null 2>&1
@@ -225,7 +224,7 @@ install_vscode(){
     if [ "" = "$PKG_OK" ]; then
         if ! grep -q https://packages.microsoft.com/repos/vscode "/etc/apt/sources.list.d/microsoft-edge-dev.list" && ! grep -q https://packages.microsoft.com/repos/vscode "/etc/apt/sources.list.d/microsoft-edge.list"; then
             wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add – > /dev/null 2>&1
-            sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" >> /etc/apt/sources.list.d/microsoft-edge-dev.list' > /dev/null 2>&1
+            sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" >> /etc/apt/sources.list.d/microsoft-edge-dev.list'
             sudo apt update > /dev/null 2>&1
         fi
         sudo apt install $REQUIRED_PKG -y > /dev/null 2>&1
@@ -243,7 +242,7 @@ install_sublime(){
 
     if [ "" = "$PKG_OK" ]; then
         wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null 2>&1
-        sudo sh -c 'echo "deb [arch=amd64] https://download.sublimetext.com/ apt/stable/" >> /etc/apt/sources.list.d/sublime-text.list' > /dev/null 2>&1
+        sudo sh -c 'echo "deb [arch=amd64] https://download.sublimetext.com/ apt/stable/" >> /etc/apt/sources.list.d/sublime-text.list'
         sudo apt update && sudo apt install $REQUIRED_PKG -y > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] Sublime Text Installed\e[39m\n"
     else
@@ -287,8 +286,8 @@ install_element(){
 
     if [ "" = "$PKG_OK" ]; then
         sudo wget -O /usr/share/keyrings/element-io-archive-keyring.gpg https://packages.element.io/debian/element-io-archive-keyring.gpg > /dev/null 2>&1
-        echo "deb [signed-by=/usr/share/keyrings/element-io-archive-keyring.gpg] https://packages.element.io/debian/ default main" | sudo tee /etc/apt/sources.list.d/element-io.list > /dev/null 2>&1
-        sudo apt update && sudo apt install $REQUIRED_PKG -y > /dev/null 2>&1
+        echo "deb [signed-by=/usr/share/keyrings/element-io-archive-keyring.gpg] https://packages.element.io/debian/ default main" | sudo tee /etc/apt/sources.list.d/element-io.list
+        sudo apt update > /dev/null 2>&1 && sudo apt install $REQUIRED_PKG -y > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] ElementChat Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] ElementChat is already installed\e[39m\n"
