@@ -294,6 +294,45 @@ install_element(){
     fi
 }
 
+install_laravel_pack(){
+    echo -e "\n\e[39m[+] Checking Laravel Pack\e[39m\n"
+
+    
+    echo -e "\n\e[39m[+] Checking PHP 8.1 and Composer \e[39m\n"
+
+    REQUIRED_PKG="php8.1"
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
+    if [ "" = "$PKG_OK" ]; then
+        sudo add-apt-repository ppa:ondrej/php -y
+
+        sudo apt update > /dev/null 2>&1 && sudo apt install php8.1 php8.1-fpm php8.1-gmp php8.1-curl php8.1-intl php8.1-mbstring php8.1-xmlrpc php8.1-pgsql php8.1-gd php8.1-xml php8.1-cli php8.1-zip php-pear php8.1-redis php8.1-mysql -y > /dev/null 2>&1
+
+        # Composer
+        curl -sS https://getcomposer.org/installer -o ./composer-setup.php > /dev/null 2>&1 && sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer > /dev/null 2>&1
+        composer self-update  > /dev/null 2>&1
+        rm -rf composer-setup.php > /dev/null 2>&1
+
+        # Deployer
+        curl -LO https://deployer.org/deployer.phar > /dev/null 2>&1 && sudo mv deployer.phar /usr/local/bin/dep > /dev/null 2>&1 && sudo chmod +x /usr/local/bin/dep && dep self-update > /dev/null 2>&1
+
+        echo -e "\n\e[92m    [✔] PHP 8.1 and Composer Installed\e[39m\n"
+    else
+        echo -e "\n\e[92m    [✔] PHP 8.1 and Composer is already installed\e[39m\n"
+    fi
+
+    echo -e "\n\e[39m[+] Checking NodeJS 18 \e[39m\n"
+
+    REQUIRED_PKG="nodejs"
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
+    if [ "" = "$PKG_OK" ]; then
+        sudo apt install gcc g++ make > /dev/null 2>&1 && curl -sL  https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt install nodejs npm -y > /dev/null 2>&1
+
+        echo -e "\n\e[92m    [✔] NodeJS 18 Installed\e[39m\n"
+    else
+        echo -e "\n\e[92m    [✔] NodeJS 18 is already installed\e[39m\n"
+    fi
+}
+
 
 
 install_essentials() {
@@ -341,6 +380,12 @@ TEXT="Programs"
 if confirm; then
     # PROGRAMS
     install_essentials
+fi
+
+TEXT="Laravel Dev Pack"
+if confirm; then
+    # Laravel Dev Pack
+    install_laravel_pack
 fi
 
 # BYE
