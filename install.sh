@@ -1,9 +1,5 @@
 #!/bin/bash
 
-CURRENT_USER="${whoami}"
-SCRIPT_PATH="$( cd "$(dirname "$0")" ; pwd -P )"
-
-
 welcome_screen() {
 cat << "EOF"
 
@@ -18,20 +14,18 @@ ________/\\\\\\\\\_____/\\\\\\\\\\___________________________/\\\_______________
         _______\/////////____\/////////_________\/////______________\///_____\///____________________\///_____
 
 EOF
-
-echo -e "Olá $CURRENT_USER"
 }
 
 check_operating_system() {
    # Check that this installer is running on a
    # Debian-like operating system (for dependencies)
 
-   echo -e "\e[39m[+] Checking operating system\e[39m"
-   error="\e[91m    [✘] Need to be run on a Ubuntu-like operating system, exiting.\e[39m"
+   echo -e "\n\e[39m[+] Checking operating system\e[39m\n"
+   error="\n\e[91m    [✘] Need to be run on a Ubuntu-like operating system, exiting.\e[39m\n"
 
    if [[ -f "/etc/os-release" ]]; then
        if [[ $(cat /etc/os-release | grep -e "ID_LIKE=\"\?ubuntu" -e "ID=ubuntu") ]]; then
-           echo -e "\e[92m    [✔] Ubuntu-like operating system\e[39m"
+           echo -e "\n\e[92m    [✔] Ubuntu-like operating system\e[39m\n"
        else
            echo -e "$error"
            exit 1
@@ -59,93 +53,94 @@ cleaning() {
 }
 
 update_upgrade() {
-    echo -e "\e[39m[+] Update and Upgrade System\e[39m"
+    echo -e "\n\e[39m[+] Update and Upgrade System\e[39m\n"
 
     sudo timedatectl set-timezone America/Sao_Paulo && sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
 
-    echo -e "\e[92m    [✔] Config Jornalctl configured\e[39m"
+    echo -e "\n\e[92m    [✔] Config Jornalctl configured\e[39m\n"
 
-    echo -e "\e[39m[+] Install packages\e[39m"
+    echo -e "\n\e[39m[+] Install packages\e[39m\n"
 
     sudo apt install git curl wget net-tools software-properties-common acl unzip htop ncdu -y
 
-    echo -e "\e[92m    [✔] Packages Installed\e[39m"
+    echo -e "\n\e[92m    [✔] Packages Installed\e[39m\n"
 }
 
 limit_jornalctl() {
-    echo -e "\e[39m[+] Config Jornalctl Files\e[39m"
+    echo -e "\n\e[39m[+] Config Jornalctl Files\e[39m\n"
 
     sudo journalctl --vacuum-time=2d && sudo journalctl --vacuum-size=500M
 
-    echo -e "\e[92m    [✔] Config Jornalctl configured\e[39m"
+    echo -e "\n\e[92m    [✔] Config Jornalctl configured\e[39m\n"
 }
 
 install_oh_my_z() {
     sudo apt install zsh fonts-powerline dconf-cli -y && zsh --version
     chsh -s /usr/bin/zsh
 
-    echo -e "\e[39m[+] Checking ohmyzsh\e[39m"
+    echo -e "\n\e[39m[+] Checking ohmyzsh\e[39m\n"
 
     if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     else
-        echo -e "\e[92m    [✔] ohmyzsh is already installed\e[39m"
+        echo -e "\n\e[92m    [✔] ohmyzsh is already installed\e[39m\n"
     fi
 
     echo -e "\e[39m[+] Checking powerlevel10k\e[39m"
     
     if [[ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]]; then
         git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-        echo -e "\e[92m    [✔] powerlevel10k installed\e[39m"
+        echo -e "\n\e[92m    [✔] powerlevel10k installed\e[39m\n"
     else
-        echo -e "\e[92m    [✔] powerlevel10k is already installed\e[39m"
+        echo -e "\n\e[92m    [✔] powerlevel10k is already installed\e[39m\n"
     fi
 
-    echo -e "\e[39m[+] Checking zsh-autosuggestions\e[39m"
+    echo -e "\n\e[39m[+] Checking zsh-autosuggestions\e[39m\n"
 
     if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]]; then
         git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
-        echo -e "\e[92m    [✔] zsh-autosuggestions installed\e[39m"
+        echo -e "\n\e[92m    [✔] zsh-autosuggestions installed\e[39m\n"
     else
-        echo -e "\e[92m    [✔] zsh-autosuggestions is already installed\e[39m"
+        echo -e "\n\e[92m    [✔] zsh-autosuggestions is already installed\e[39m\n"
     fi
 
-    echo -e "\e[39m[+] Checking zsh-syntax-highlighting\e[39m"
+    echo -e "\n\e[39m[+] Checking zsh-syntax-highlighting\e[39m\n"
 
     if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]]; then
         git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-        echo -e "\e[92m    [✔] zsh-syntax-highlighting installed\e[39m"
+        echo -e "\n\e[92m    [✔] zsh-syntax-highlighting installed\e[39m\n"
     else
-        echo -e "\e[92m    [✔] zsh-syntax-highlighting is already installed\e[39m"
+        echo -e "\n\e[92m    [✔] zsh-syntax-highlighting is already installed\e[39m\n"
     fi
     
 
-    echo -e "\e[39m[+] Checking config on .zshrc file\e[39m"
+    echo -e "\n\e[39m[+] Checking config on .zshrc file\e[39m\n"
 
      if [[ -f "$HOME/.zshrc" ]]; then
-        sed 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/g' $HOME/.zshrc
-        sed 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k/powerlevel10k"/g' $HOME/.zshrc
+        sed -i 's/robbyrussell/powerlevel10k/powerlevel10k/g' $HOME/.zshrc
+        sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/g' $HOME/.zshrc
 
         echo -e "if [ -f ~/.zshrc_aliases ]; then" >> $HOME/.zshrc
         echo -e "  . ~/.zshrc_aliases" >> $HOME/.zshrc
         echo -e "fi" >> $HOME/.zshrc
         
-        #echo -e "# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh." > $HOME/.zshrc
-        #echo -e "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" > $HOME/.zshrc
-        echo -e "\e[92m    [✔] .zshrc configured\e[39m"
+        echo -e "# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh." > $HOME/.zshrc
+        echo -e "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" > $HOME/.zshrc
+
+        echo -e "\n\e[92m    [✔] .zshrc configured\e[39m\n"
     else
-        echo -e "\e[91m    [✘] .zshrc file not found.\e[39m"
+        echo -e "\n\e[91m    [✘] .zshrc file not found.\e[39m\n"
     fi
 }
 
 set_p10k_config(){
-    echo -e "\e[39m[+] Checking config on .p10k.zsh and .zshrc_aliases file\e[39m"
+    echo -e "\n\e[39m[+] Checking config on .p10k.zsh and .zshrc_aliases file\e[39m\n"
 
     cp .p10k.zsh $HOME/
     cp .zshrc_aliases $HOME/
     source $HOME/.zshrc
 
-    echo -e "\e[92m    [✔] .p10k.zsh and .zshrc_aliases configured\e[39m"
+    echo -e "\n\e[92m    [✔] .p10k.zsh and .zshrc_aliases configured\e[39m\n"
 }
 
 
