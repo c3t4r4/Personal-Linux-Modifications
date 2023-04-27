@@ -89,10 +89,6 @@ install_oh_my_z() {
 
     ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 
-    echo -e "Custom: $ZSH_CUSTOM"
-
-    read -p "Press any key to resume ..."
-
     echo -e "\e[39m[+] Checking powerlevel10k\e[39m"
     
     if [[ ! -d "$ZSH_CUSTOM/themes/powerlevel10k" ]]; then
@@ -119,21 +115,19 @@ install_oh_my_z() {
     else
         echo -e "\n\e[92m    [✔] zsh-syntax-highlighting is already installed\e[39m\n"
     fi
-
-    p10k configure
     
 
     echo -e "\n\e[39m[+] Checking config on .zshrc file\e[39m\n"
 
      if [[ -f "$HOME/.zshrc" ]]; then
-        sed -i 's/robbyrussell/powerlevel10k/powerlevel10k/g' $HOME/.zshrc
-        sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/g' $HOME/.zshrc
+        sed -i 's/robbyrussell/powerlevel10k/powerlevel10k/g' "$HOME/.zshrc"
+        sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/g' "$HOME/.zshrc"
 
-        echo -e "if [ -f ~/.zshrc_aliases ]; then" >> $HOME/.zshrc
-        echo -e "  . ~/.zshrc_aliases" >> $HOME/.zshrc
-        echo -e "fi" >> $HOME/.zshrc
+        echo -e "if [ -f ~/.zshrc_aliases ]; then" >> "$HOME/.zshrc"
+        echo -e "  . ~/.zshrc_aliases" >> "$HOME/.zshrc"
+        echo -e "fi" >> "$HOME/.zshrc"
 
-        echo -e "\n\n" >> $HOME/.zshrc
+        echo -e "\n\n" >> "$HOME/.zshrc"
 
         # echo -e "# To customize prompt, run 'p10k configure' or edit ~/.p10k.zsh." >> $HOME/.zshrc
         # echo -e "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> $HOME/.zshrc
