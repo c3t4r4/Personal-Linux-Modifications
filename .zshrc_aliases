@@ -1,0 +1,11 @@
+### Comandos
+
+alias upd='sudo apt update && sudo apt list --upgradable && sudo apt dist-upgrade -y && sudo apt autoremove -y'
+
+alias upd-portainer='docker stop portainer && docker rm portainer && docker pull portainer/portainer-ce:latest && docker run -d -p 9000:9000 -p 9443:9443 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest'
+
+### Comandos Laravel
+
+alias phpas='php artisan serve --host=0.0.0.0 --port=8000'
+alias npmrw='npm run watch'
+alias ia="shell-genie ask"
