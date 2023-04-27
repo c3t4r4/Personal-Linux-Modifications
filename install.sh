@@ -372,7 +372,7 @@ update_upgrade
 autoremove
 
 
-TEXT="ZSH"
+TEXT="install ZSH"
 if confirm; then
     # ZSH
     install_oh_my_z
