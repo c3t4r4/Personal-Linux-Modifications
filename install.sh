@@ -57,35 +57,93 @@ cleaning() {
 }
 
 update_upgrade() {
-    sudo timedatectl set-timezone America/Sao_Paulo && sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt install curl wget net-tools software-properties-common acl unzip htop ncdu -y
+    echo -e "\e[39m[+] Update and Upgrade System\e[39m"
+
+    sudo timedatectl set-timezone America/Sao_Paulo && sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+
+    echo -e "\e[92m    [✔] Config Jornalctl configured\e[39m"
+
+    echo -e "\e[39m[+] Install packages\e[39m"
+
+    sudo apt install git curl wget net-tools software-properties-common acl unzip htop ncdu -y
+
+    echo -e "\e[92m    [✔] Packages Installed\e[39m"
 }
 
 limit_jornalctl() {
+    echo -e "\e[39m[+] Config Jornalctl Files\e[39m"
+
     sudo journalctl --vacuum-time=2d && sudo journalctl --vacuum-size=500M
+
+    echo -e "\e[92m    [✔] Config Jornalctl configured\e[39m"
 }
 
 install_oh_my_z() {
     sudo apt install zsh fonts-powerline dconf-cli -y && zsh --version
     chsh -s /usr/bin/zsh
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-    git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-    sed 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/g' $HOME/.zshrc
-    sed 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k/powerlevel10k"/g' $HOME/.zshrc
 
-    echo -e "if [ -f ~/.zshrc_aliases ]; then" > $HOME/.zshrc
-    echo -e "  . ~/.zshrc_aliases" > $HOME/.zshrc
-    echo -e "fi" > $HOME/.zshrc
+    echo -e "\e[39m[+] Checking ohmyzsh\e[39m"
+
+    if ! command_exists zsh; then
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    else
+        echo -e "\e[92m    [✔] ohmyzsh is already installed\e[39m"
+    fi
+
+    echo -e "\e[39m[+] Checking powerlevel10k\e[39m"
     
-    #echo -e "# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh." > $HOME/.zshrc
-    #echo -e "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" > $HOME/.zshrc
+    if [[ ! -d "$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]]; then
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+        echo -e "\e[92m    [✔] powerlevel10k installed\e[39m"
+    else
+        echo -e "\e[92m    [✔] powerlevel10k is already installed\e[39m"
+    fi
+
+    echo -e "\e[39m[+] Checking zsh-autosuggestions\e[39m"
+
+    if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]]; then
+        git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+        echo -e "\e[92m    [✔] zsh-autosuggestions installed\e[39m"
+    else
+        echo -e "\e[92m    [✔] zsh-autosuggestions is already installed\e[39m"
+    fi
+
+    echo -e "\e[39m[+] Checking zsh-syntax-highlighting\e[39m"
+
+    if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]]; then
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+        echo -e "\e[92m    [✔] zsh-syntax-highlighting installed\e[39m"
+    else
+        echo -e "\e[92m    [✔] zsh-syntax-highlighting is already installed\e[39m"
+    fi
+    
+
+    echo -e "\e[39m[+] Checking config on .zshrc file\e[39m"
+
+     if [[ -f "$HOME/.zshrc" ]]; then
+        sed 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/g' $HOME/.zshrc
+        sed 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k/powerlevel10k"/g' $HOME/.zshrc
+
+        echo -e "if [ -f ~/.zshrc_aliases ]; then" > $HOME/.zshrc
+        echo -e "  . ~/.zshrc_aliases" > $HOME/.zshrc
+        echo -e "fi" > $HOME/.zshrc
+        
+        #echo -e "# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh." > $HOME/.zshrc
+        #echo -e "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" > $HOME/.zshrc
+        echo -e "\e[92m    [✔] .zshrc configured\e[39m"
+    else
+        echo -e "\e[91m    [✘] .zshrc file not found.\e[39m"
+    fi
 }
 
 set_p10k_config(){
+    echo -e "\e[39m[+] Checking config on .p10k.zsh and .zshrc_aliases file\e[39m"
+
     cp .p10k.zsh $HOME/
     cp .zshrc_aliases $HOME/
     source $HOME/.zshrc
+
+    echo -e "\e[92m    [✔] .p10k.zsh and .zshrc_aliases configured\e[39m"
 }
 
 
