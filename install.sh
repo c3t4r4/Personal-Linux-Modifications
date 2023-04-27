@@ -316,12 +316,20 @@ remove_libreoffice
 update_upgrade
 autoremove
 
-# ZSH
-# install_oh_my_z
-# set_p10k_config
+read "Do you want to install ZSH ? [Y/n] "
+response=${response:l} #tolower
+if [[ $response =~ ^(y| ) ]] || [[ -z $response ]]; then
+    # ZSH
+    install_oh_my_z
+    set_p10k_config
+fi
 
-# PROGRAMS
-install_essentials
+read "Do you want to install Programs ? [Y/n] "
+response=${response:l} #tolower
+if [[ $response =~ ^(y| ) ]] || [[ -z $response ]]; then
+    # PROGRAMS
+    install_essentials
+fi
 
 # BYE
 bye_screen
