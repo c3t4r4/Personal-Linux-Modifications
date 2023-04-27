@@ -306,6 +306,18 @@ install_essentials() {
     install_element
 }
 
+confirm() {
+    while true; do
+        read -p "Do you want to install $TEXT ?? (YES/NO/CANCEL) " yn
+        case $yn in
+            [Yy]* ) return 0;;
+            [Nn]* ) return 1;;
+            [Cc]* ) exit;;
+            * ) echo "Please answer YES, NO, or CANCEL.";;
+        esac
+    done
+}
+
 #RUN SCRIPT
 clear
 welcome_screen
@@ -317,17 +329,16 @@ remove_libreoffice
 update_upgrade
 autoremove
 
-read -r "Do you want to install ZSH ? [Y/n] "
-response=${response:l} #tolower
-if [[ $response =~ ^(y| ) ]] || [[ -z $response ]]; then
+
+TEXT="ZSH"
+if confirm; then
     # ZSH
     install_oh_my_z
     set_p10k_config
 fi
 
-read -r "Do you want to install Programs ? [Y/n] "
-response=${response:l} #tolower
-if [[ $response =~ ^(y| ) ]] || [[ -z $response ]]; then
+TEXT="Programs"
+if confirm; then
     # PROGRAMS
     install_essentials
 fi
