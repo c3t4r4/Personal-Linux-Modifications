@@ -66,7 +66,7 @@ update_upgrade() {
 
     sudo timedatectl set-timezone America/Sao_Paulo  > /dev/null 2>&1 && sudo apt update  > /dev/null 2>&1 && sudo apt upgrade -y  > /dev/null 2>&1 && sudo apt autoremove -y > /dev/null 2>&1
 
-    echo -e "\n\e[92m    [✔] Config Jornalctl configured\e[39m\n"
+    echo -e "\n\e[92m    [✔] Update and Upgrade ok\e[39m\n"
 
     echo -e "\n\e[39m[+] Install packages\e[39m\n"
 
@@ -97,7 +97,7 @@ install_oh_my_z() {
     echo -e "\n\e[39m[+] Checking ohmyzsh\e[39m\n"
 
     if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" > /dev/null 2>&1
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     else
         echo -e "\n\e[92m    [✔] ohmyzsh is already installed\e[39m\n"
     fi
@@ -347,7 +347,9 @@ install_essentials() {
 
 confirm() {
     while true; do
-        read -p "\nDo you want to install $TEXT ?? (YES/NO/CANCEL) \n" yn
+        echo -e "\n"
+        read -p "Do you want to install $TEXT ?? (YES/NO/CANCEL) " yn
+        echo -e "\n"
         case $yn in
             [Yy]* ) return 0;;
             [Nn]* ) return 1;;
