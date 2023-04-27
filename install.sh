@@ -147,8 +147,10 @@ remove_libreoffice() {
 install_chrome(){
     echo -e "\n\e[39m[+] Checking Google Chrome\e[39m\n"
 
-    if dpkg -s google-chrome-stable >/dev/null 2>&1;
-    then
+    REQUIRED_PKG="google-chrome-stable"
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
+
+    if [ "" = "$PKG_OK" ]; then
         if [ ! -f "/tmp/google-chrome.deb" ]
         then
             wget -O /tmp/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
