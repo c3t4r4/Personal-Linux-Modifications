@@ -307,6 +307,7 @@ install_essentials() {
 }
 
 #RUN SCRIPT
+clear
 welcome_screen
 
 # BASICS
