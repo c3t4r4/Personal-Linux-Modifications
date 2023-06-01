@@ -70,7 +70,7 @@ update_upgrade() {
 
     echo -e "\n\e[39m[+] Install packages\e[39m\n"
 
-    sudo apt install git curl wget net-tools software-properties-common apt-transport-https acl unzip htop ncdu flatpak bcmwl-kernel-source -y > /dev/null 2>&1
+    sudo apt install git curl wget net-tools software-properties-common apt-transport-https acl zip unzip htop ncdu flatpak bcmwl-kernel-source -y > /dev/null 2>&1
 
     echo -e "\n\e[92m    [✔] Packages Installed\e[39m\n"
 }
@@ -344,6 +344,7 @@ install_extensions(){
 
     if [ "" = "$PKG_OK" ]; then
         sudo apt install $REQUIRED_PKG chrome-gnome-shell -y  > /dev/null 2>&1
+        unzip extensions.zip -d ~/.local/share/gnome-shell/extensions
         echo -e "\n\e[92m    [✔] Gnome Extensions Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Gnome Extensions is already installed\e[39m\n"
