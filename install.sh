@@ -254,11 +254,13 @@ install_sublime(){
 install_dbeaver(){
     echo -e "\n\e[39m[+] Checking DBeaver\e[39m\n"
 
-    REQUIRED_PKG="dbeaver"
-    PKG_OK=$(flatpak list | grep $REQUIRED_PKG)
+    REQUIRED_PKG="dbeaver-ce"
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
 
     if [ "" = "$PKG_OK" ]; then
-        sudo flatpak install flathub io.dbeaver.DBeaverCommunity -y
+        sudo  wget -O /usr/share/keyrings/dbeaver.gpg.key https://dbeaver.io/debs/dbeaver.gpg.key
+        echo "deb [signed-by=/usr/share/keyrings/dbeaver.gpg.key] https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
+        sudo apt-get update && sudo apt-get install dbeaver-ce
         echo -e "\n\e[92m    [✔] DBeaver Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] DBeaver is already installed\e[39m\n"
