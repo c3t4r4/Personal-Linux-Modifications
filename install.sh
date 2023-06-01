@@ -187,7 +187,7 @@ install_chrome(){
         then
             wget -O /tmp/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb > /dev/null 2>&1
         fi
-        sudo dpkg -i /tmp/google-chrome.deb
+        sudo apt install libu2f-udev -y  > /dev/null 2>&1 && sudo dpkg -i /tmp/google-chrome.deb
         echo -e "\n\e[92m    [✔] Google Chrome Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Google Chrome is already installed\e[39m\n"
