@@ -405,7 +405,6 @@ install_essentials() {
     install_dbeaver
     install_thunderbird
     install_element
-    install_extension_manager
 }
 
 confirm() {
@@ -446,6 +445,12 @@ TEXT="install Programs"
 if confirm; then
     # PROGRAMS
     install_essentials
+fi
+
+TEXT="install Extensions"
+if confirm; then
+    # Extensions
+    install_extension_manager
 fi
 
 TEXT="install Laravel Dev Pack"
