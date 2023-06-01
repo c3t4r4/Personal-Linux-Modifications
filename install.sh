@@ -301,14 +301,14 @@ install_laravel_pack(){
     echo -e "\n\e[39m[+] Checking Laravel Pack\e[39m\n"
 
     
-    echo -e "\n\e[39m[+] Checking PHP 8.1 and Composer \e[39m\n"
+    echo -e "\n\e[39m[+] Checking PHP 8.2 and Composer \e[39m\n"
 
-    REQUIRED_PKG="php8.1"
+    REQUIRED_PKG="php8.2"
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
     if [ "" = "$PKG_OK" ]; then
         sudo add-apt-repository ppa:ondrej/php -y
 
-        sudo apt update > /dev/null 2>&1 && sudo apt install php8.1 php8.1-fpm php8.1-gmp php8.1-curl php8.1-intl php8.1-mbstring php8.1-xmlrpc php8.1-pgsql php8.1-gd php8.1-xml php8.1-cli php8.1-zip php-pear php8.1-redis php8.1-mysql -y > /dev/null 2>&1
+        sudo apt update > /dev/null 2>&1 && sudo apt install php8.2 php8.2-fpm php8.2-gmp php8.2-curl php8.2-intl php8.2-mbstring php8.2-xmlrpc php8.2-pgsql php8.2-gd php8.2-xml php8.2-cli php8.2-zip php-pear php8.2-redis php8.2-mysql -y > /dev/null 2>&1
 
         # Composer
         curl -sS https://getcomposer.org/installer -o ./composer-setup.php > /dev/null 2>&1 && sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer > /dev/null 2>&1
@@ -318,9 +318,9 @@ install_laravel_pack(){
         # Deployer
         curl -LO https://deployer.org/deployer.phar > /dev/null 2>&1 && sudo mv deployer.phar /usr/local/bin/dep > /dev/null 2>&1 && sudo chmod +x /usr/local/bin/dep && dep self-update > /dev/null 2>&1
 
-        echo -e "\n\e[92m    [✔] PHP 8.1 and Composer Installed\e[39m\n"
+        echo -e "\n\e[92m    [✔] PHP 8.2 and Composer Installed\e[39m\n"
     else
-        echo -e "\n\e[92m    [✔] PHP 8.1 and Composer is already installed\e[39m\n"
+        echo -e "\n\e[92m    [✔] PHP 8.2 and Composer is already installed\e[39m\n"
     fi
 
     echo -e "\n\e[39m[+] Checking NodeJS 18 \e[39m\n"
