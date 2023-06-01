@@ -64,13 +64,13 @@ check_operating_system() {
 update_upgrade() {
     echo -e "\n\e[39m[+] Update and Upgrade System\e[39m\n"
 
-    sudo timedatectl set-timezone America/Sao_Paulo  > /dev/null 2>&1 && sudo apt update  > /dev/null 2>&1 && sudo apt upgrade -y  > /dev/null 2>&1 && sudo apt autoremove -y > /dev/null 2>&1
+    sudo timedatectl set-timezone America/Sao_Paulo  > /dev/null 2>&1 && sudo apt update  > /dev/null 2>&1 && sudo apt upgrade -y  && sudo apt autoremove -y > /dev/null 2>&1
 
     echo -e "\n\e[92m    [✔] Update and Upgrade ok\e[39m\n"
 
     echo -e "\n\e[39m[+] Install packages\e[39m\n"
 
-    sudo apt install git curl wget net-tools software-properties-common apt-transport-https acl unzip htop ncdu -y > /dev/null 2>&1
+    sudo apt install git curl wget net-tools software-properties-common apt-transport-https acl unzip htop ncdu flatpak -y > /dev/null 2>&1
 
     echo -e "\n\e[92m    [✔] Packages Installed\e[39m\n"
 }
@@ -187,7 +187,7 @@ install_chrome(){
         then
             wget -O /tmp/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb > /dev/null 2>&1
         fi
-        sudo dpkg -i /tmp/google-chrome.deb > /dev/null 2>&1
+        sudo dpkg -i /tmp/google-chrome.deb
         echo -e "\n\e[92m    [✔] Google Chrome Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Google Chrome is already installed\e[39m\n"
@@ -208,7 +208,7 @@ install_edge(){
             sudo sh -c 'echo "deb [arch=amd64]  https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-dev.list'
             sudo rm microsoft.gpg && sudo apt update > /dev/null 2>&1
         fi
-        sudo apt install $REQUIRED_PKG -y > /dev/null 2>&1
+        sudo apt install $REQUIRED_PKG -y
         echo -e "\n\e[92m    [✔] Microsoft Edge Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Microsoft Edge is already installed\e[39m\n"
@@ -228,7 +228,7 @@ install_vscode(){
             sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" >> /etc/apt/sources.list.d/microsoft-edge-dev.list'
             sudo rm microsoft.gpg && sudo apt update > /dev/null 2>&1
         fi
-        sudo apt install $REQUIRED_PKG -y > /dev/null 2>&1
+        sudo apt install $REQUIRED_PKG -y
         echo -e "\n\e[92m    [✔] Microsoft VSCode Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Microsoft VSCode is already installed\e[39m\n"
@@ -244,7 +244,7 @@ install_sublime(){
     if [ "" = "$PKG_OK" ]; then
         wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null 2>&1
         sudo sh -c 'echo "deb [arch=amd64] https://download.sublimetext.com/ apt/stable/" >> /etc/apt/sources.list.d/sublime-text.list'
-        sudo apt update > /dev/null 2>&1 && sudo apt install $REQUIRED_PKG -y > /dev/null 2>&1
+        sudo apt update > /dev/null 2>&1 && sudo apt install $REQUIRED_PKG -y
         echo -e "\n\e[92m    [✔] Sublime Text Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Sublime Text is already installed\e[39m\n"
@@ -258,7 +258,7 @@ install_dbeaver(){
     PKG_OK=$(flatpak list | grep $REQUIRED_PKG)
 
     if [ "" = "$PKG_OK" ]; then
-        sudo flatpak install flathub io.dbeaver.DBeaverCommunity -y > /dev/null 2>&1
+        sudo flatpak install flathub io.dbeaver.DBeaverCommunity -y
         echo -e "\n\e[92m    [✔] DBeaver Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] DBeaver is already installed\e[39m\n"
