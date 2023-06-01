@@ -447,9 +447,9 @@ if confirm; then
     install_essentials
 fi
 
-TEXT="install Extensions"
+TEXT="install Gnome Extensions"
 if confirm; then
-    # Extensions
+    # Gnome Extensions
     install_extension_manager
 fi
 
