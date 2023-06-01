@@ -336,22 +336,66 @@ install_laravel_pack(){
     fi
 }
 
-install_extensions(){
+install_extension_manager(){
     echo -e "\n\e[39m[+] Checking Gnome Extensions\e[39m\n"
 
     REQUIRED_PKG="gnome-shell-extensions"
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
 
     if [ "" = "$PKG_OK" ]; then
-        sudo apt install $REQUIRED_PKG chrome-gnome-shell -y  > /dev/null 2>&1
-        unzip extensions.zip -d ~/.local/share/gnome-shell/extensions
+        sudo apt install $REQUIRED_PKG chrome-gnome-shell gnome-shell-extension-manager -y  > /dev/null 2>&1
+        
         echo -e "\n\e[92m    [✔] Gnome Extensions Installed\e[39m\n"
+        
     else
         echo -e "\n\e[92m    [✔] Gnome Extensions is already installed\e[39m\n"
     fi
+
+    install_extensions
 }
 
+install_extensions(){
+    echo -e "\n\e[39m[+] Checking Gnome Extensions\e[39m\n"
 
+    unzip extensions.zip
+    cd extensions
+
+    gnome-extensions install burn-my-windows@schneegans.github.com.zip
+    gnome-extensions enable burn-my-windows@schneegans.github.com
+    rm -rf burn-my-windows@schneegans.github.com.zip
+
+    echo -e "\n\e[92m    [✔] burn my windows\e[39m\n"
+    
+    gnome-extensions install compiz-alike-magic-lamp-effect@hermes83.github.com.zip
+    gnome-extensions enable compiz-alike-magic-lamp-effect@hermes83.github.com
+    rm -rf compiz-alike-magic-lamp-effect@hermes83.github.com.zip
+
+    echo -e "\n\e[92m    [✔] compiz alike magic lamp effect\e[39m\n"
+
+    gnome-extensions install compiz-windows-effect@hermes83.github.com.zip
+    gnome-extensions enable compiz-windows-effect@hermes83.github.com
+    rm -rf compiz-windows-effect@hermes83.github.com.zip
+
+    echo -e "\n\e[92m    [✔] compiz windows effect\e[39m\n"
+
+    gnome-extensions install ding@rastersoft.com.zip
+    gnome-extensions enable ding@rastersoft.com
+    rm -rf ding@rastersoft.com.zip
+
+    echo -e "\n\e[92m    [✔] ding\e[39m\n"
+
+    gnome-extensions install jiggle@jeffchannell.com.zip
+    gnome-extensions enable jiggle@jeffchannell.com
+    rm -rf jiggle@jeffchannell.com.zip
+
+    echo -e "\n\e[92m    [✔] jiggle\e[39m\n"
+
+    gnome-extensions install Vitals@CoreCoding.com.zip
+    gnome-extensions enable Vitals@CoreCoding.com
+    rm -rf Vitals@CoreCoding.com.zip
+
+    echo -e "\n\e[92m    [✔] Vitals\e[39m\n"
+}
 
 install_essentials() {
     install_chrome
@@ -361,7 +405,7 @@ install_essentials() {
     install_dbeaver
     install_thunderbird
     install_element
-    install_extensions
+    install_extension_manager
 }
 
 confirm() {
