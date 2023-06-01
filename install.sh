@@ -336,6 +336,20 @@ install_laravel_pack(){
     fi
 }
 
+install_extensions(){
+    echo -e "\n\e[39m[+] Checking Gnome Extensions\e[39m\n"
+
+    REQUIRED_PKG="gnome-shell-extensions"
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
+
+    if [ "" = "$PKG_OK" ]; then
+        sudo apt install $REQUIRED_PKG chrome-gnome-shell -y  > /dev/null 2>&1
+        echo -e "\n\e[92m    [✔] Gnome Extensions Installed\e[39m\n"
+    else
+        echo -e "\n\e[92m    [✔] Gnome Extensions is already installed\e[39m\n"
+    fi
+}
+
 
 
 install_essentials() {
@@ -346,6 +360,7 @@ install_essentials() {
     install_dbeaver
     install_thunderbird
     install_element
+    install_extensions
 }
 
 confirm() {
