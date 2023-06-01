@@ -360,41 +360,43 @@ install_extensions(){
     unzip extensions.zip
     cd extensions
 
-    gnome-extensions install burn-my-windows@schneegans.github.com.zip
+    gnome-extensions install --force burn-my-windows@schneegans.github.com.zip
     gnome-extensions enable burn-my-windows@schneegans.github.com
     rm -rf burn-my-windows@schneegans.github.com.zip
 
     echo -e "\n\e[92m    [✔] burn my windows\e[39m\n"
     
-    gnome-extensions install compiz-alike-magic-lamp-effect@hermes83.github.com.zip
+    gnome-extensions install --force compiz-alike-magic-lamp-effect@hermes83.github.com.zip
     gnome-extensions enable compiz-alike-magic-lamp-effect@hermes83.github.com
     rm -rf compiz-alike-magic-lamp-effect@hermes83.github.com.zip
 
     echo -e "\n\e[92m    [✔] compiz alike magic lamp effect\e[39m\n"
 
-    gnome-extensions install compiz-windows-effect@hermes83.github.com.zip
+    gnome-extensions install --force compiz-windows-effect@hermes83.github.com.zip
     gnome-extensions enable compiz-windows-effect@hermes83.github.com
     rm -rf compiz-windows-effect@hermes83.github.com.zip
 
     echo -e "\n\e[92m    [✔] compiz windows effect\e[39m\n"
 
-    gnome-extensions install ding@rastersoft.com.zip
+    gnome-extensions install --force ding@rastersoft.com.zip
     gnome-extensions enable ding@rastersoft.com
     rm -rf ding@rastersoft.com.zip
 
     echo -e "\n\e[92m    [✔] ding\e[39m\n"
 
-    gnome-extensions install jiggle@jeffchannell.com.zip
+    gnome-extensions install --force jiggle@jeffchannell.com.zip
     gnome-extensions enable jiggle@jeffchannell.com
     rm -rf jiggle@jeffchannell.com.zip
 
     echo -e "\n\e[92m    [✔] jiggle\e[39m\n"
 
-    gnome-extensions install Vitals@CoreCoding.com.zip
+    gnome-extensions install --force Vitals@CoreCoding.com.zip
     gnome-extensions enable Vitals@CoreCoding.com
     rm -rf Vitals@CoreCoding.com.zip
 
     echo -e "\n\e[92m    [✔] Vitals\e[39m\n"
+
+    rm -rf extensions
 }
 
 install_essentials() {
