@@ -260,7 +260,7 @@ install_dbeaver(){
     if [ "" = "$PKG_OK" ]; then
         sudo  wget -O /usr/share/keyrings/dbeaver.gpg.key https://dbeaver.io/debs/dbeaver.gpg.key
         echo "deb [signed-by=/usr/share/keyrings/dbeaver.gpg.key] https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
-        sudo apt-get update && sudo apt-get install dbeaver-ce
+        sudo apt-get update > /dev/null 2>&1 && sudo apt-get install $REQUIRED_PKG -y
         echo -e "\n\e[92m    [✔] DBeaver Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] DBeaver is already installed\e[39m\n"
