@@ -302,7 +302,7 @@ install_laravel_pack(){
 
     
     echo -e "\n\e[39m[+] Checking PHP 8.2 and Composer \e[39m\n"
-
+    
     REQUIRED_PKG="php8.2"
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
     if [ "" = "$PKG_OK" ]; then
@@ -323,16 +323,28 @@ install_laravel_pack(){
         echo -e "\n\e[92m    [✔] PHP 8.2 and Composer is already installed\e[39m\n"
     fi
 
-    echo -e "\n\e[39m[+] Checking NodeJS 18 \e[39m\n"
+     echo -e "\n\e[39m[+] Checking PHP 8.1 \e[39m\n"
+
+    REQUIRED_PKG="php8.1"
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
+    if [ "" = "$PKG_OK" ]; then
+         sudo apt update > /dev/null 2>&1 && sudo apt install php8.1 php8.1-fpm php8.1-gmp php8.1-curl php8.1-intl php8.1-mbstring php8.1-xmlrpc php8.1-pgsql php8.1-gd php8.1-xml php8.1-cli php8.1-zip php-pear php8.1-redis php8.1-mysql -y > /dev/null 2>&1
+
+        echo -e "\n\e[92m    [✔] PHP 8.1 Installed\e[39m\n"
+    else
+        echo -e "\n\e[92m    [✔] PHP 8.1 is already installed\e[39m\n"
+    fi
+
+    echo -e "\n\e[39m[+] Checking NodeJS 20 \e[39m\n"
 
     REQUIRED_PKG="nodejs"
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
     if [ "" = "$PKG_OK" ]; then
-        sudo apt install gcc g++ make > /dev/null 2>&1 && curl -sL  https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt install nodejs npm -y > /dev/null 2>&1
+        sudo apt install curl gcc g++ make > /dev/null 2>&1 && curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash && source $HOME/.zshrc && nvm install --lts > /dev/null 2>&1
 
-        echo -e "\n\e[92m    [✔] NodeJS 18 Installed\e[39m\n"
+        echo -e "\n\e[92m    [✔] NodeJS 20 Installed\e[39m\n"
     else
-        echo -e "\n\e[92m    [✔] NodeJS 18 is already installed\e[39m\n"
+        echo -e "\n\e[92m    [✔] NodeJS 20 is already installed\e[39m\n"
     fi
 }
 
