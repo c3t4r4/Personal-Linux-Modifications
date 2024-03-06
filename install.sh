@@ -205,7 +205,7 @@ install_edge(){
         if ! grep -q https://packages.microsoft.com/repos/edge "/etc/apt/sources.list.d/microsoft-edge-dev.list" && ! grep -q https://packages.microsoft.com/repos/edge "/etc/apt/sources.list.d/microsoft-edge.list"; then
             curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
             sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
-            sudo sh -c 'echo "deb [arch=amd64]  https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-dev.list'
+            sudo sh -c 'echo "deb [arch=amd64]  https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge.list'
             sudo rm microsoft.gpg && sudo apt update > /dev/null 2>&1
         fi
         sudo apt install $REQUIRED_PKG -y
@@ -225,7 +225,7 @@ install_vscode(){
         if ! grep -q https://packages.microsoft.com/repos/vscode "/etc/apt/sources.list.d/microsoft-edge-dev.list" && ! grep -q https://packages.microsoft.com/repos/vscode "/etc/apt/sources.list.d/microsoft-edge.list"; then
             curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
             sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
-            sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" >> /etc/apt/sources.list.d/microsoft-edge-dev.list'
+            sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" >> /etc/apt/sources.list.d/microsoft-edge.list'
             sudo rm microsoft.gpg && sudo apt update > /dev/null 2>&1
         fi
         sudo apt install $REQUIRED_PKG -y
