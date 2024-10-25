@@ -321,7 +321,7 @@ install_laravel_pack(){
     echo -e "\n\e[39m[+] Checking Laravel Pack\e[39m\n"
 
     
-    echo -e "\n\e[39m[+] Checking PHP 8.3 and Composer \e[39m\n"
+    echo -e "\n\e[39m[+] Checking PHP 8.3, Composer and Deployer \e[39m\n"
     
     REQUIRED_PKG="php8.3"
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
@@ -338,17 +338,17 @@ install_laravel_pack(){
         # Deployer
         curl -LO https://deployer.org/deployer.phar > /dev/null 2>&1 && sudo mv deployer.phar /usr/local/bin/dep > /dev/null 2>&1 && sudo chmod +x /usr/local/bin/dep && dep self-update > /dev/null 2>&1
 
-        echo -e "\n\e[92m    [✔] PHP 8.3 and Composer Installed\e[39m\n"
+        echo -e "\n\e[92m    [✔] PHP 8.3, Composer and Deployer Installed\e[39m\n"
     else
-        echo -e "\n\e[92m    [✔] PHP 8.3 and Composer is already installed\e[39m\n"
+        echo -e "\n\e[92m    [✔] PHP 8.3, Composer and Deployer is already installed\e[39m\n"
     fi
 
-     echo -e "\n\e[39m[+] Checking PHP 8.1 \e[39m\n"
+    echo -e "\n\e[39m[+] Checking PHP 8.1 \e[39m\n"
 
     REQUIRED_PKG="php8.1"
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
     if [ "" = "$PKG_OK" ]; then
-         sudo apt update > /dev/null 2>&1 && sudo apt install php8.1 php8.1-fpm php8.1-gmp php8.1-curl php8.1-intl php8.1-mbstring php8.1-xmlrpc php8.1-pgsql php8.1-gd php8.1-xml php8.1-cli php8.1-zip php-pear php8.1-redis php8.1-mysql -y > /dev/null 2>&1
+        sudo apt update > /dev/null 2>&1 && sudo apt install php8.1 php8.1-fpm php8.1-gmp php8.1-curl php8.1-intl php8.1-mbstring php8.1-xmlrpc php8.1-pgsql php8.1-gd php8.1-xml php8.1-cli php8.1-zip php-pear php8.1-redis php8.1-mysql -y > /dev/null 2>&1
 
         echo -e "\n\e[92m    [✔] PHP 8.1 Installed\e[39m\n"
     else
