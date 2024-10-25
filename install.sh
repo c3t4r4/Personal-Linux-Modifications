@@ -92,6 +92,17 @@ limit_jornalctl() {
 }
 
 install_oh_my_z() {
+    sudo apt install fontconfig
+    cd ~
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip
+    mkdir -p .local/share/fonts
+    unzip Meslo.zip -d .local/share/fonts
+    cd .local/share/fonts
+    rm *Windows*
+    cd ~
+    rm Meslo.zip
+    fc-cache -fv
+
     sudo apt install zsh fonts-powerline dconf-cli -y  > /dev/null 2>&1 && zsh --version
 
     echo -e "\n\e[39m[+] Checking ohmyzsh\e[39m\n"
@@ -221,7 +232,7 @@ install_edge(){
 
 install_toolbox(){
     curl -fsSL https://raw.githubusercontent.com/nagygergo/jetbrains-toolbox-install/master/jetbrains-toolbox.sh | bash
-        echo -e "\n\e[92m    [✔]JetStream ToolBox Installed\e[39m\n"
+    echo -e "\n\e[92m    [✔]JetStream ToolBox Installed\e[39m\n"
 }
 
 install_vscode(){
