@@ -109,6 +109,10 @@ install_oh_my_z() {
     echo -e "\e[39m[+] Checking powerlevel10k\e[39m"
     
     if [[ ! -d "$ZSH_CUSTOM/themes/powerlevel10k" ]]; then
+        wget -P /usr/local/share/fonts https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+        wget -P /usr/local/share/fonts https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+        wget -P /usr/local/share/fonts https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+        wget -P /usr/local/share/fonts https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
         git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM/themes/powerlevel10k" > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] powerlevel10k installed\e[39m\n"
     else
@@ -215,6 +219,11 @@ install_edge(){
     fi
 }
 
+install_toolbox(){
+    curl -fsSL https://raw.githubusercontent.com/nagygergo/jetbrains-toolbox-install/master/jetbrains-toolbox.sh | bash
+        echo -e "\n\e[92m    [✔]JetStream ToolBox Installed\e[39m\n"
+}
+
 install_vscode(){
     echo -e "\n\e[39m[+] Checking Microsoft VSCode\e[39m\n"
 
@@ -301,14 +310,14 @@ install_laravel_pack(){
     echo -e "\n\e[39m[+] Checking Laravel Pack\e[39m\n"
 
     
-    echo -e "\n\e[39m[+] Checking PHP 8.2 and Composer \e[39m\n"
+    echo -e "\n\e[39m[+] Checking PHP 8.3 and Composer \e[39m\n"
     
-    REQUIRED_PKG="php8.2"
+    REQUIRED_PKG="php8.3"
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
     if [ "" = "$PKG_OK" ]; then
         sudo add-apt-repository ppa:ondrej/php -y
 
-        sudo apt update > /dev/null 2>&1 && sudo apt install php8.2 php8.2-fpm php8.2-gmp php8.2-curl php8.2-intl php8.2-mbstring php8.2-xmlrpc php8.2-pgsql php8.2-gd php8.2-xml php8.2-cli php8.2-zip php-pear php8.2-redis php8.2-mysql -y > /dev/null 2>&1
+        sudo apt update > /dev/null 2>&1 && sudo apt install php8.3 php8.3-fpm php8.3-gmp php8.3-curl php8.3-intl php8.3-mbstring php8.3-xmlrpc php8.3-pgsql php8.3-gd php8.3-xml php8.3-cli php8.3-zip php-pear php8.3-redis php8.3-mysql -y > /dev/null 2>&1
 
         # Composer
         curl -sS https://getcomposer.org/installer -o ./composer-setup.php > /dev/null 2>&1 && sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer > /dev/null 2>&1
@@ -318,9 +327,9 @@ install_laravel_pack(){
         # Deployer
         curl -LO https://deployer.org/deployer.phar > /dev/null 2>&1 && sudo mv deployer.phar /usr/local/bin/dep > /dev/null 2>&1 && sudo chmod +x /usr/local/bin/dep && dep self-update > /dev/null 2>&1
 
-        echo -e "\n\e[92m    [✔] PHP 8.2 and Composer Installed\e[39m\n"
+        echo -e "\n\e[92m    [✔] PHP 8.3 and Composer Installed\e[39m\n"
     else
-        echo -e "\n\e[92m    [✔] PHP 8.2 and Composer is already installed\e[39m\n"
+        echo -e "\n\e[92m    [✔] PHP 8.3 and Composer is already installed\e[39m\n"
     fi
 
      echo -e "\n\e[39m[+] Checking PHP 8.1 \e[39m\n"
@@ -423,6 +432,7 @@ install_essentials() {
     install_edge
     install_vscode
     install_sublime
+    install_toolbox
     install_dbeaver
     install_thunderbird
     install_element
