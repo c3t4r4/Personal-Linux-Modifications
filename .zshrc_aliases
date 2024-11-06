@@ -16,4 +16,4 @@ alias npmrw='npm run watch'
 
 ### Gerador de Senha
 
-alias gerarsenha='read -p "Digite o tamanho da senha: " tamanho; openssl rand -base64 $tamanho | tr -d "\n"; echo'
+alias gerarsenha='echo -n "Digite o tamanho da senha: "; read tamanho; openssl rand -base64 $tamanho | tr -d "\n"; echo'
