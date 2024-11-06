@@ -13,3 +13,7 @@ alias pest='[ -f pest ] && sh pest || sh vendor/bin/pest'
 
 alias phpas='php artisan serve --host=0.0.0.0 --port=8000'
 alias npmrw='npm run watch'
+
+### Gerador de Senha
+
+alias gerarsenha='read -p "Digite o tamanho da senha: " tamanho; openssl rand -base64 $tamanho | tr -d "\n"; echo'
