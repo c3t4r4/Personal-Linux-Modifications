@@ -147,7 +147,6 @@ install_oh_my_z() {
     else
         echo -e "\n\e[92m    [✔] zsh-syntax-highlighting is already installed\e[39m\n"
     fi
-    
 
     echo -e "\n\e[39m[+] Checking config on .zshrc file\e[39m\n"
 
@@ -191,6 +190,20 @@ remove_libreoffice() {
     echo -e "\n\e[92m    [✔] LibreOffice Removed\e[39m\n"
 }
 
+install_docker(){
+    echo -e "\n\e[39m[+] Checking Docker and Docker Compose\e[39m\n"
+
+    REQUIRED_PKG="docker-ce"
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
+
+    if [ "" = "$PKG_OK" ]; then
+        sudo apt install apt-transport-https ca-certificates curl software-properties-common -y  > /dev/null 2>&1 && sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg  > /dev/null 2>&1 && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list  > /dev/null 2>&1 && sudo apt update > /dev/null 2>&1 && sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y  > /dev/null 2>&1 && sudo usermod -aG docker ${USER}
+        echo -e "\n\e[92m    [✔] Docker and Docker Compose Installed\e[39m\n"
+    else
+        echo -e "\n\e[92m    [✔]Docker and Docker Compose is already installed\e[39m\n"
+    fi
+}
+
 install_chrome(){
     echo -e "\n\e[39m[+] Checking Google Chrome\e[39m\n"
 
@@ -202,7 +215,8 @@ install_chrome(){
         then
             wget -O /tmp/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb > /dev/null 2>&1
         fi
-        sudo apt install libu2f-udev -y  > /dev/null 2>&1 && sudo dpkg -i /tmp/google-chrome.deb
+        echo -e "\n\e[92m    [✔] Instaling Google Chrome\e[39m\n"
+        sudo apt install libu2f-udev -y  > /dev/null 2>&1 && sudo dpkg -i /tmp/google-chrome.deb > /dev/null 2>&1 
         echo -e "\n\e[92m    [✔] Google Chrome Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Google Chrome is already installed\e[39m\n"
@@ -223,7 +237,8 @@ install_edge(){
             sudo sh -c 'echo "deb [arch=amd64]  https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge.list'
             sudo rm microsoft.gpg && sudo apt update > /dev/null 2>&1
         fi
-        sudo apt install $REQUIRED_PKG -y
+        echo -e "\n\e[92m    [✔] Instaling Microsoft Edge\e[39m\n"
+        sudo apt install $REQUIRED_PKG -y  > /dev/null 2>&1
         echo -e "\n\e[92m    [✔] Microsoft Edge Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] Microsoft Edge is already installed\e[39m\n"
@@ -231,8 +246,14 @@ install_edge(){
 }
 
 install_toolbox(){
-    curl -fsSL https://raw.githubusercontent.com/nagygergo/jetbrains-toolbox-install/master/jetbrains-toolbox.sh | bash
-    echo -e "\n\e[92m    [✔]JetStream ToolBox Installed\e[39m\n"
+    if [ ! -f "$HOME/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox" ]
+        then
+            curl -fsSL https://raw.githubusercontent.com/nagygergo/jetbrains-toolbox-install/master/jetbrains-toolbox.sh | bash
+            echo -e "\n\e[92m    [✔]JetStream ToolBox Installed\e[39m\n"
+        fi
+    else
+        echo -e "\n\e[92m    [✔] JetStream ToolBox is already installed\e[39m\n"
+    fi
 }
 
 install_vscode(){
@@ -319,7 +340,6 @@ install_element(){
 
 install_laravel_pack(){
     echo -e "\n\e[39m[+] Checking Laravel Pack\e[39m\n"
-
     
     echo -e "\n\e[39m[+] Checking PHP 8.3, Composer and Deployer \e[39m\n"
     
@@ -360,7 +380,15 @@ install_laravel_pack(){
     REQUIRED_PKG="nodejs"
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
     if [ "" = "$PKG_OK" ]; then
-        sudo apt install curl gcc g++ make > /dev/null 2>&1 && curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash && source $HOME/.zshrc && nvm install --lts > /dev/null 2>&1
+        sudo apt install curl gcc g++ make > /dev/null 2>&1 && curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+
+        if ! grep -q export NVM_DIR= "$HOME/.zshrc"; then
+            echo -e 'export NVM_DIR="$HOME/.nvm"' >> $HOME/.zshrc
+            echo -e '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' >> $HOME/.zshrc
+            echo -e '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' >> $HOME/.zshrc
+        fi
+        
+        source $HOME/.zshrc && nvm install --lts > /dev/null 2>&1
 
         echo -e "\n\e[92m    [✔] NodeJS 20 Installed\e[39m\n"
     else
@@ -447,6 +475,7 @@ install_essentials() {
     install_dbeaver
     install_thunderbird
     install_element
+    install_docker
 }
 
 confirm() {
