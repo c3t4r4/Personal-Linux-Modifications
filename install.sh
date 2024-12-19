@@ -167,6 +167,12 @@ install_oh_my_z() {
             echo -e "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> $HOME/.zshrc
         fi
 
+        if ! grep -q 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' "$HOME/.zshrc"; then
+            echo >> "$HOME/.zshrc"
+            echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' >> "$HOME/.zshrc"
+            echo >> "$HOME/.zshrc"
+        fi
+
         echo -e "\n\e[92m    [✔] .zshrc configured\e[39m\n"
     else
         echo -e "\n\e[91m    [✘] .zshrc file not found.\e[39m\n"
@@ -367,13 +373,17 @@ install_laravel_pack(){
         echo -e "\n\e[92m    [✔] PHP 8.1 is already installed\e[39m\n"
     fi
 
+    echo -e "\n\e[39m[+] Checking Composer \e[39m\n"
+
     # Composer
-    curl -sS https://getcomposer.org/installer -o ./composer-setup.php > /dev/null 2>&1 && sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer > /dev/null 2>&1
+    curl -sS https://getcomposer.org/installer -o ./composer-setup.php > /dev/null 2>&1 && sudo php composer-setup.php --install-dir=$HOME/.config/composer/vendor/bin --filename=composer > /dev/null 2>&1
     composer self-update  > /dev/null 2>&1
     rm -rf composer-setup.php > /dev/null 2>&1
 
+    echo -e "\n\e[39m[+] Checking Deployer \e[39m\n"
+
     # Deployer
-    curl -LO https://deployer.org/deployer.phar > /dev/null 2>&1 && sudo mv deployer.phar /usr/local/bin/dep > /dev/null 2>&1 && sudo chmod +x /usr/local/bin/dep && dep self-update > /dev/null 2>&1
+    curl -LO https://deployer.org/deployer.phar > /dev/null 2>&1 && sudo mv deployer.phar $HOME/.config/composer/vendor/bin > /dev/null 2>&1 && sudo chmod +x $HOME/.config/composer/vendor/bin && dep self-update > /dev/null 2>&1
 
     echo -e "\n\e[39m[+] Checking NodeJS LTS \e[39m\n"
 
