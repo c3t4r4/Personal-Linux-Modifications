@@ -350,17 +350,9 @@ install_laravel_pack(){
 
         sudo apt update > /dev/null 2>&1 && sudo apt install php8.3 php8.3-fpm php8.3-gmp php8.3-curl php8.3-intl php8.3-mbstring php8.3-xmlrpc php8.3-pgsql php8.3-gd php8.3-xml php8.3-cli php8.3-zip php-pear php8.3-redis php8.3-mysql -y > /dev/null 2>&1
 
-        # Composer
-        curl -sS https://getcomposer.org/installer -o ./composer-setup.php > /dev/null 2>&1 && sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer > /dev/null 2>&1
-        composer self-update  > /dev/null 2>&1
-        rm -rf composer-setup.php > /dev/null 2>&1
-
-        # Deployer
-        curl -LO https://deployer.org/deployer.phar > /dev/null 2>&1 && sudo mv deployer.phar /usr/local/bin/dep > /dev/null 2>&1 && sudo chmod +x /usr/local/bin/dep && dep self-update > /dev/null 2>&1
-
-        echo -e "\n\e[92m    [✔] PHP 8.3, Composer and Deployer Installed\e[39m\n"
+        echo -e "\n\e[92m    [✔] PHP 8.3 Installed\e[39m\n"
     else
-        echo -e "\n\e[92m    [✔] PHP 8.3, Composer and Deployer is already installed\e[39m\n"
+        echo -e "\n\e[92m    [✔] PHP 8.3 is already installed\e[39m\n"
     fi
 
     echo -e "\n\e[39m[+] Checking PHP 8.1 \e[39m\n"
@@ -375,7 +367,15 @@ install_laravel_pack(){
         echo -e "\n\e[92m    [✔] PHP 8.1 is already installed\e[39m\n"
     fi
 
-    echo -e "\n\e[39m[+] Checking NodeJS 20 \e[39m\n"
+    # Composer
+    curl -sS https://getcomposer.org/installer -o ./composer-setup.php > /dev/null 2>&1 && sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer > /dev/null 2>&1
+    composer self-update  > /dev/null 2>&1
+    rm -rf composer-setup.php > /dev/null 2>&1
+
+    # Deployer
+    curl -LO https://deployer.org/deployer.phar > /dev/null 2>&1 && sudo mv deployer.phar /usr/local/bin/dep > /dev/null 2>&1 && sudo chmod +x /usr/local/bin/dep && dep self-update > /dev/null 2>&1
+
+    echo -e "\n\e[39m[+] Checking NodeJS LTS \e[39m\n"
 
     REQUIRED_PKG="nodejs"
     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG | grep "install ok installed")
@@ -390,9 +390,9 @@ install_laravel_pack(){
         
         source $HOME/.zshrc && nvm install --lts > /dev/null 2>&1
 
-        echo -e "\n\e[92m    [✔] NodeJS 20 Installed\e[39m\n"
+        echo -e "\n\e[92m    [✔] NodeJS LTS Installed\e[39m\n"
     else
-        echo -e "\n\e[92m    [✔] NodeJS 20 is already installed\e[39m\n"
+        echo -e "\n\e[92m    [✔] NodeJS LTS is already installed\e[39m\n"
     fi
 }
 
