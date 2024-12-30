@@ -253,9 +253,8 @@ install_edge(){
 
 install_toolbox(){
     if [ ! -f "$HOME/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox" ]; then
-            curl -fsSL https://raw.githubusercontent.com/nagygergo/jetbrains-toolbox-install/master/jetbrains-toolbox.sh | bash
-            echo -e "\n\e[92m    [✔]JetStream ToolBox Installed\e[39m\n"
-        fi
+        curl -fsSL https://raw.githubusercontent.com/nagygergo/jetbrains-toolbox-install/master/jetbrains-toolbox.sh | bash
+        echo -e "\n\e[92m    [✔] JetStream ToolBox Installed\e[39m\n"
     else
         echo -e "\n\e[92m    [✔] JetStream ToolBox is already installed\e[39m\n"
     fi
